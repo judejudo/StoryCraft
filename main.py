@@ -40,7 +40,7 @@ questions = [
 
 # Define options for each question
 options = [
-    ["English 🇺🇸", "French 🇫🇷", "Kiswahili"],
+    ["English 🇺🇸", "Spanish 🇪🇸", "French 🇫🇷", "Chinese 🇨🇳", "Hindi 🇮🇳"],
     ["Lion 🦁", "Elephant 🐘", "Penguin 🐧", "Dolphin 🐬", "Giraffe 🦒"],
     ["The beach 🏖️", "The zoo 🦁🐒", "The park 🌳", "Grandma's house 👵🏠", "The mountains ⛰️"],
     ["Drawing 🎨", "Dancing 💃", "Playing soccer ⚽", "Singing 🎤", "Building with blocks 🧱"],
