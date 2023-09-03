@@ -26,6 +26,7 @@ st.title("StoryCraft")
 st.write("Generate Wonderful Stories with pictures for children! Presented for AS2V Hackathon.")
 
 name = st.text_input("What's your name?")
+age = st.text_input("How old are you?")
 
 # Define multiple-choice questions
 questions = [
@@ -56,7 +57,7 @@ for i, question in enumerate(questions):
 # Combine selected answers to create a story prompt
 favorite_animal, exciting_place, special_interest, superhero, mood = selected_answers
 
-plot = f"Once upon a time, there was a person named {name} whose favorite animal was {favorite_animal}. They had the opportunity to visit {exciting_place} and had a fantastic adventure there. In their free time, they enjoyed {special_interest}, which was their special talent. One day, they met a hero similar to {superhero}, who inspired them. Today, they woke up feeling {mood}. Write a short story based that would be of interest to them."
+plot = f"Short story for a person named {name} who is {age} whose favorite animal is {favorite_animal}. They love to visit {exciting_place} and enjoy {special_interest}.  {superhero} appear. {mood}. "
 
 # # Generate plot or allow user to prompt
 # type_ = st.selectbox(
