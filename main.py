@@ -30,6 +30,7 @@ age = st.text_input("How old are you?")
 
 # Define multiple-choice questions
 questions = [
+    "What language would you like your story to be in?",
     "What's your favorite animal?",
     "What's the most exciting place you've been to? How about we find a story set in a similar place?",
     "Do you have a special talent or hobby? Let's find a story about a character who shares that interest!",
@@ -39,6 +40,7 @@ questions = [
 
 # Define options for each question
 options = [
+    ["English 🇺🇸", "French 🇫🇷", "Kiswahili"],
     ["Lion 🦁", "Elephant 🐘", "Penguin 🐧", "Dolphin 🐬", "Giraffe 🦒"],
     ["The beach 🏖️", "The zoo 🦁🐒", "The park 🌳", "Grandma's house 👵🏠", "The mountains ⛰️"],
     ["Drawing 🎨", "Dancing 💃", "Playing soccer ⚽", "Singing 🎤", "Building with blocks 🧱"],
@@ -55,9 +57,9 @@ for i, question in enumerate(questions):
     selected_answers.append(answer)
 
 # Combine selected answers to create a story prompt
-favorite_animal, exciting_place, special_interest, superhero, mood = selected_answers
+language, favorite_animal, exciting_place, special_interest, superhero, mood = selected_answers
 
-plot = f"Short story for a person named {name} who is {age} whose favorite animal is {favorite_animal}. They love to visit {exciting_place} and enjoy {special_interest}.  {superhero} appear. {mood}. "
+plot = f"Short story of at least 5 paragraphs for a person named {name} who is {age} whose favorite animal is {favorite_animal}. They love to visit {exciting_place} and enjoy {special_interest}.  {superhero} appear. {mood}. Write the story in {language} "
 
 # # Generate plot or allow user to prompt
 # type_ = st.selectbox(
@@ -129,6 +131,15 @@ with st.spinner("Writing..."):
             except Exception as e:
                 print(e)
 
-# story_url = f"https://onceuponaitime.com?type={type_}&prompt={urllib.parse.quote_plus(codecs.encode(plot, 'rot13'))}&story={urllib.parse.quote_plus(codecs.encode(story_with_images, 'rot13'))}"
 
 st.write("")
+
+download = st.button("Download Story")
+if download:
+    download_html = """
+    <script>
+    window.print(); 
+    </script>
+    """
+    st.markdown(download_html, unsafe_allow_html=True)
+
