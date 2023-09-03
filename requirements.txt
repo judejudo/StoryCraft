@@ -1,0 +1,5 @@
+streamlit==1.12.2
+openai==0.23.0
+replicate==0.0.1a16
+altair<5
+pydantic<2
