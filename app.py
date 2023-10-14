@@ -52,9 +52,18 @@ def generate_story():
             else:
                 image_url = part
                 story_with_images += image_url + "\n\n"
+                
+            if "replicate.com" not in story:
+                try:
+                    image_prompt = prompts.illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
+                    image_url = stable_diffusion.generate_image(image_prompt)
+                    story_with_images += image_url + "\n\n"
+                except Exception as e:
+                    print(e)
 
         response = {
             'status': 'success',
+            'uid': name,
             'story': story_with_images
         }
 
