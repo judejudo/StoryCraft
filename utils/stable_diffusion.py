@@ -15,8 +15,7 @@ def generate_image(prompt: str) -> str:
         prompt for image
 
     Returns:
-        image link7
-        #
+        image link
 
     Raises:
         Failed to generate image
