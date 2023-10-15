@@ -100,7 +100,7 @@ pytz-deprecation-shim==0.1.0.post0
 pywin32==305.1
 PyYAML @ file:///C:/ci_311/pyyaml_1676432488822/work
 pyzmq @ file:///C:/b/abs_655zk4a3s8/croot/pyzmq_1686601465034/work
-replicate==0.0.1a16
+replicate~=0.15.3
 requests @ file:///C:/b/abs_316c2inijk/croot/requests_1690400295842/work
 rich==13.5.2
 ROPGadget==7.4
@@ -139,3 +139,5 @@ Werkzeug @ file:///C:/b/abs_8578rs2ra_/croot/werkzeug_1679489759009/work
 widgetsnbextension @ file:///C:/b/abs_882k4_4kdf/croot/widgetsnbextension_1679313880295/work
 win-inet-pton @ file:///C:/ci_311/win_inet_pton_1676425458225/work
 zipp @ file:///C:/ci_311/zipp_1676426100491/work
+
+flask~=2.2.2
