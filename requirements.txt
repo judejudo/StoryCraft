@@ -68,7 +68,7 @@ pandas @ file:///C:/miniconda3/conda-bld/pandas_1692298018988/work
 pandas-stubs==2.0.3.230814
 parso @ file:///opt/conda/conda-bld/parso_1641458642106/work
 pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
-Pillow==9.4.0
+Pillow==10.0.1
 platformdirs @ file:///C:/b/abs_b6z_yqw_ii/croot/platformdirs_1692205479426/work
 plumbum==1.8.2
 prompt-toolkit @ file:///C:/ci_311/prompt-toolkit_1676425940920/work
