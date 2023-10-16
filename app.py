@@ -14,6 +14,7 @@ def test():
 def generate_story():
     try:
         data = request.get_json()
+        uid = data.get('uid', "")
         name = data.get('name', "")
         age = data.get('age', "")
         choices = data.get('choices', {})
@@ -66,8 +67,7 @@ def generate_story():
                     
                 
         story_data = {
-            'name': name,
-            'age': age,
+            'uid': uid,
             'story': story_with_images,
             'timestamp': firestore.SERVER_TIMESTAMP
         }
