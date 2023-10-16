@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from utils import prompts, gpt3, stable_diffusion
+from google.cloud import firestore
 
 app = Flask(__name__)
+
+db = firestore.Client(project='a2sv-hackathon')
 
 @app.route('/', methods=['GET'])
 def test():
@@ -11,6 +14,7 @@ def test():
 def generate_story():
     try:
         data = request.get_json()
+        uid = data.get('uid', "")
         name = data.get('name', "")
         age = data.get('age', "")
         choices = data.get('choices', {})
@@ -52,7 +56,7 @@ def generate_story():
             else:
                 image_url = part
                 story_with_images += image_url + "\n\n"
-                
+                 
             if "replicate.com" not in story:
                 try:
                     image_prompt = prompts.illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
@@ -60,11 +64,21 @@ def generate_story():
                     story_with_images += image_url + "\n\n"
                 except Exception as e:
                     print(e)
+                    
+                
+        story_data = {
+            'uid': uid,
+            'story': story_with_images,
+            'timestamp': firestore.SERVER_TIMESTAMP
+        }
+        
+        stories_ref = db.collection('stories')
+        stories_ref.add(story_data)
 
         response = {
             'status': 'success',
             'uid': name,
-            'story': story_with_images
+            'story': story_with_images,
         }
 
         return jsonify(response)
