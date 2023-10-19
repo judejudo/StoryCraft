@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from utils import prompts, gpt3, stable_diffusion
 from google.cloud import firestore
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 db = firestore.Client(project='a2sv-hackathon')
 
@@ -47,10 +49,11 @@ def generate_story():
                     print(e)
 
         # Combine the story with images
+        img_list = []
         parts = story.split("\n\n")
         parts = [part for part in parts if len(part) > 0]
-
         story_with_images = ""
+
         for i, part in enumerate(parts):
             if "replicate.com" not in part:
                 story_with_images += part + "\n\n"
@@ -62,6 +65,7 @@ def generate_story():
                 try:
                     image_prompt = prompts.illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
                     image_url = stable_diffusion.generate_image(image_prompt)
+                    img_list.append(image_url)
                     story_with_images += image_url + "\n\n"
                 except Exception as e:
                     print(e)
@@ -79,6 +83,8 @@ def generate_story():
             'status': 'success',
             'uid': uid,
             'story': story_with_images,
+            'parts': parts,
+            'images': img_list
         }
 
         return jsonify(response)
