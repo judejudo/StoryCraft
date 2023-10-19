@@ -219,9 +219,11 @@
         <span class="line" onclick="currentSlide(7)"></span>
     </div>
     <div class="btn-generate">
-        <button>Generate</button>
+        <button onclick="generateStory()">Generate</button>
     </div>
     <script>
+        const BASE_URL = 'http://127.0.0.1:5000/';
+
         let slideIndex = 1;
         let language = "English";
         let animal = "lion";
@@ -249,7 +251,7 @@
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
-            for(i =0; i < lines.length; i++){
+            for (i = 0; i < lines.length; i++) {
                 lines[i].className = lines[i].className.replace(" active", "");
             }
             slides[slideIndex - 1].style.display = "block";
@@ -258,32 +260,61 @@
 
         function getLanguage(lang) {
             language = lang;
-            console.log(language);
         }
 
         function getAnimal(name) {
             animal = name;
-            console.log(animal);
         }
 
         function getPlace(name) {
             place = name;
-            console.log(place);
         }
 
         function getTalent(name) {
             talent = name;
-            console.log(talent);
         }
 
         function getHero(name) {
             hero = name;
-            console.log(hero);
         }
 
         function getMood(name) {
             mood = name;
-            console.log(mood);
+        }
+
+        async function generateStory() {
+            // const jsonBody = {
+            //     "uid": "HGNZB4GXuVfuRs6Zv8vHTVYIQ8E3",
+            //     "name": document.getElementById("name").value,
+            //     "age": document.getElementById("age").value,
+            //     "choices": [
+            //         {
+            //             "language": language,
+            //             "favorite_animal": animal,
+            //             "exciting_place": place,
+            //             "special_interest": talent,
+            //             "superhero": hero,
+            //             "mood": mood
+            //         }
+            //     ]
+            // }
+
+            // console.log(JSON.stringify(jsonBody));
+
+            // const response = await fetch(BASE_URL + 'generate_story', {
+            //     method: 'POST',
+            //     body: JSON.stringify(jsonBody),
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     }
+            // });
+
+            // const responseJson = await response.json();
+            // localStorage.setItem("story", JSON.stringify(responseJson));
+            let storyw = localStorage.getItem("story");
+            // console.log(responseJson)
+            // console.log(JSON.parse(storyw));
+            window.location.href = 'http://localhost/StoryCraft/storybook.html';
         }
     </script>
 </body>
