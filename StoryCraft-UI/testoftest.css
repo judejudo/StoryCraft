@@ -1,0 +1,221 @@
+@import url(https://pro.fontawesome.com/releases/v5.11.2/css/all.css);
+
+:root {
+    --user-button-circle: rgba(0, 0, 0, 0.025);
+    --user-button-cardborder: rgba(255, 255, 255, 0.25);
+    --user-button-text: #323133;
+    --user-button-shadow: rgba(0, 0, 0, 0.1);
+}
+
+
+.next-steps .next-top, .next-steps .next-bottom {
+    padding: 20px;
+    background-color: #ffeaa3;
+    font-family: 'Open Sans';
+    margin-top: 20px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+
+    & h3{
+        color: #d07814;
+        font-size: 22px;
+        margin: 3px 0 10px 0;
+        font-weight: 600;
+    }
+}
+
+.next-top .card-top-right, .next-bottom .card-top-right{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: #ffd438;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    clip-path: ellipse(49% 46% at 99% 0%);
+    border-radius: 10px;
+}
+
+.next-top .card-bottom-left, .next-bottom .card-bottom-left{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: #ff8ed9;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    clip-path: ellipse(53% 45% at 0% 100%);
+    border-radius: 10px;
+}
+
+.next-bottom .card-bottom-left{
+    background-color: #ffd438;
+}
+
+.next-bottom .card-top-right{
+    background-color: #ff8ed9;
+}
+
+.next-steps .options {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+    min-width: 400px;
+    max-width: 500px;
+    width: calc(100% - 100px);
+    height: 200px;
+    transition: 0.25s;
+}
+
+/* @media screen and (max-width: 718px) {
+    .next-steps .options {
+        min-width: 300px;
+    }
+
+    .next-steps .options .option:nth-child(5) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 638px) {
+    .next-steps .options {
+        min-width: 440px;
+    }
+
+    .next-steps .options .option:nth-child(4) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 558px) {
+    .next-steps .options {
+        min-width: 360px;
+    }
+
+    .next-steps .options .option:nth-child(3) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 478px) {
+    .next-steps .options {
+        min-width: 280px;
+    }
+
+    .next-steps .options .option:nth-child(2) {
+        display: none;
+    }
+} */
+
+.next-steps .options .option, .next-steps .options .option-bottom {
+    position: relative;
+    overflow: hidden;
+    min-width: 60px;
+    margin: 10px;
+    background: var(--optionBackground, var(--defaultBackground, #e6e9ed));
+    background-size: auto 120%;
+    background-position: center;
+    cursor: pointer;
+    transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.next-steps .options .option.active, .next-steps .options .option-bottom.active {
+    flex-grow: 10000;
+    transform: scale(1);
+    max-width: 500px;
+    margin: 0px;
+    border-radius: 30px;
+    background-size: auto 100%;
+}
+
+.next-steps .options .option.active .shadow, .next-steps .options .option-bottom.active .shadow {
+    box-shadow: inset 0 -150px 150px -150px black, inset 0 -150px 150px -120px black;
+}
+
+.next-steps .options .option.active .label, .next-steps .options .option-bottom.active .label {
+    bottom: 20px;
+    left: 20px;
+}
+
+.next-steps .options .option.active .label .info>div, .next-steps .options .option-bottom.active .label .info>div {
+    left: 0px;
+    opacity: 1;
+}
+
+.next-steps .options .option:not(.active), .next-steps .options .option-bottom:not(.active) {
+    flex-grow: 1;
+    border-radius: 30px;
+}
+
+.next-steps .options .option:not(.active) .shadow, .next-steps .options .option-bottom:not(.active) .shadow {
+    bottom: -40px;
+    box-shadow: inset 0 -120px 0px -120px black, inset 0 -120px 0px -100px black;
+}
+
+.next-steps .options .option:not(.active) .label, .next-steps .options .option-bottom:not(.active) .label {
+    bottom: 10px;
+    left: 10px;
+}
+
+.next-steps .options .option:not(.active) .label .info>div, .next-steps .options .option-bottom:not(.active) .label .info>div {
+    left: 20px;
+    opacity: 0;
+}
+
+.next-steps .options .option .shadow, .next-steps .options .option-bottom .shadow  {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 80px;
+    transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.next-steps .options .option .label, .next-steps .options .option-bottom .label {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    height: 40px;
+    transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.next-steps .options .option .label .icon, .next-steps .options .option-bottom .label .icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+    max-width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #d07814;
+    font-weight: 700;
+    color: white;
+}
+
+.next-steps .options .option .label .info, .next-steps .options .option-bottom .label .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    color: white;
+    white-space: pre;
+}
+
+.next-steps .options .option .label .info>div, .next-steps .options .option-bottom .label .info>div  {
+    position: relative;
+    transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity 0.5s ease-out;
+}
+
+.next-steps .options .option .label .info .main, .next-steps .options .option-bottom .label .info .main {
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-wrap: wrap;
+    padding: 7px;
+}
+
+.next-steps .options .option .label .info .sub, .next-steps .options .option-bottom .label .info .sub {
+    transition-delay: 0.1s;
+}
