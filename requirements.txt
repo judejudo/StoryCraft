@@ -2,4 +2,4 @@ Flask==2.2.2
 openai==0.23.0
 protobuf==4.24.4
 pyttsx3==2.90
-replicate==0.15.4
+replicate==0.15.3
