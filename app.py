@@ -1,13 +1,18 @@
+import requests
 from flask import Flask, request, jsonify
 from utils import prompts, gpt3, stable_diffusion
 from google.cloud import firestore
 from flask_cors import CORS
+from keys import eleven_key
+from elevenlabs import set_api_key
 
 app = Flask(__name__)
 CORS(app)
 
 db = firestore.Client(project='a2sv-hackathon')
-
+set_api_key(eleven_key)
+CHUNK_SIZE = 1024
+speech_url = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM"
 
 @app.route('/', methods=['GET'])
 def test():
@@ -86,6 +91,29 @@ def generate_story():
             'parts': parts,
             'images': img_list
         }
+        
+        headers = {
+            "Accept": "audio/mpeg",
+            "Content-Type": "application/json",
+            "xi-api-key": eleven_key
+        }
+        
+        audio_data = {
+            "text": story.strip("\n\n"),
+            "model_id": "eleven_monolingual_v1",
+            "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.5
+                }
+            }
+        
+        audio_response = requests.post(speech_url, json=audio_data, headers=headers)
+        
+        with open('output.mp3', 'wb') as f:
+            for chunk in audio_response.iter_content(chunk_size=CHUNK_SIZE):
+             if chunk:
+                f.write(chunk)
+        
 
         return jsonify(response)
     except Exception as e:
