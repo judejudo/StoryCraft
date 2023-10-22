@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka One&family=Open+Sans&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
@@ -18,10 +20,10 @@
 <body>
     <nav class="navbar">
         <ul class="menu-logo">
-            <li><a class="logo">StoryCraft</a></li>
+            <li><a class="logo" href="http://localhost/StoryCraft/landing.html">StoryCraft</a></li>
         </ul>
         <ul class="menu-items">
-            <li><a href="#">Build a story</a></li>
+            <li><a href="http://localhost/StoryCraft/selection.html">Build a story</a></li>
             <li><a href="#"><span class="material-symbols-outlined">account_circle</span></a></li>
             <li><a>
                     <select name="languages" id="lang">
@@ -46,104 +48,25 @@
                     <div class="book-bg">
                         <div class="page-wrap">
                             <div class="page-bg" id="page-container">
-                                <!-- <div id="page-1" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content">
-                                        <div class="page-image">
-                                            <img src="https://www.indiewire.com/wp-content/uploads/2022/04/The-Bad-Guys-3.jpg"
-                                                alt="">
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis deserunt
-                                            soluta,
-                                            minus architecto animi quod. Officia, neque dolores facilis, numquam vel
-                                            molestiae
-                                            perspiciatis cupiditate iste accusantium vitae fugit aliquam vero.</p>
-                                        <div class="page-audio">
-                                            <audio controls preload="metadata">
-                                                <source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg">
-                                            </audio>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="page-2" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content"></div>
-                                </div>
-                                <div id="page-3" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content">
-                                        <div class="page-image">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjWhBbJAPH0b8q7wLUNXTAqpUPwcvyTSoCYA_pZdT3OjeY1d4_DdMkHDcYY3d9PeBxDWA&usqp=CAU"
-                                                alt="">
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis deserunt
-                                            soluta,
-                                            minus architecto animi quod. Officia, neque dolores facilis, numquam vel
-                                            molestiae
-                                            perspiciatis cupiditate iste accusantium vitae fugit aliquam vero.</p>
-                                        <div class="page-audio">
-                                            <audio controls preload="metadata">
-                                                <source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg">
-                                            </audio>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="page-4" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content"></div>
-                                </div>
-                                <div id="page-5" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content">
-                                        <div class="page-image">
-                                            <img src="https://cdn.whats-on-netflix.com/wp-content/uploads/2023/06/02192554/orion-and-the-dark-netflix-movie-dreamworks-jpg.webp"
-                                                alt="">
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis deserunt
-                                            soluta,
-                                            minus architecto animi quod. Officia, neque dolores facilis, numquam vel
-                                            molestiae
-                                            perspiciatis cupiditate iste accusantium vitae fugit aliquam vero.</p>
-                                        <div class="page-audio">
-                                            <audio controls preload="metadata">
-                                                <source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg">
-                                            </audio>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="page-6" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content"></div>
-                                </div>
-                                <div id="page-7" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content">
-                                        <div class="page-image">
-                                            <img src="https://beforesandafters.com/wp-content/uploads/2023/01/sq210_s160_f109_4_final.jpg"
-                                                alt="">
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis deserunt
-                                            soluta,
-                                            minus architecto animi quod. Officia, neque dolores facilis, numquam vel
-                                            molestiae
-                                            perspiciatis cupiditate iste accusantium vitae fugit aliquam vero.</p>
-                                        <div class="page-audio">
-                                            <audio controls preload="metadata">
-                                                <source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg">
-                                            </audio>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="page-8" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content"></div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="action-buttons">
-                    <button class="btn-download">
+                    <audio id="myAudio">
+                        <source src="output.mp3" type="audio/mp3">
+                    </audio>
+                    <button class="btn-download" onclick="playAudio()">
+                        <span class="tooltip">Play</span>
+                        <span class="material-symbols-outlined">
+                            play_arrow
+                        </span></button>
+                    <button class="btn-download" onclick="pauseAudio()">
+                        <span class="tooltip">Pause</span>
+                        <span class="material-symbols-outlined">
+                            pause
+                        </span></button>
+                    <button class="btn-download" onclick="downloadPDF()">
                         <span class="tooltip">Download</span>
                         <span class="material-symbols-outlined">
                             download
@@ -159,6 +82,7 @@
                             refresh
                         </span></button>
                 </div>
+
             </div>
             <div class="next-steps">
                 <h2>What next</h2>
@@ -249,112 +173,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            let story = JSON.parse(localStorage.getItem("story"));
-            let pageImages = story.images;
-            let paragraphs = story.parts;
-
-            let pageCount = story.images.length;
-
-            for (let i = 0; i < pageCount; i++) {
-                var pageDiv = document.getElementById("page-container");
-                pageDiv.innerHTML += `<div id="page-${(i*2)-1}" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content">
-                                        <div class="page-image">
-                                            <img src="${pageImages[i]}"
-                                                alt="Page Image">
-                                        </div>
-                                        <p>${paragraphs[i]}</p>
-                                        <div class="page-audio">
-                                            <audio controls preload="metadata">
-                                                <source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg">
-                                            </audio>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="page-${(i*2)}" class="page" data-dir="r">
-                                    <div class="page-trigger"></div>
-                                    <div class="page-content"></div>
-                                </div>`;
-            }
-
-            var coverIndex = 1;
-            var pageIndex = 0
-            var num = $('.page').length;
-            var zIndexSet = '<style>';
-
-            for (i = 1; i <= num; i++) {
-                zIndexSet += '[data-dir="r"]#page-' + i + '{z-index: ' + (num - i + 1) + '}';
-            };
-            zIndexSet += '</style>';
-            $('.book').prepend(zIndexSet);
-            $(function () {
-                $('.page-trigger').on('click', function () {
-                    var e = $(this).parent('.page')
-                    flip(e.attr('id'), e)
-                });
-
-
-                $('.cover').on('click', function () {
-                    var e = $(this)
-                    flip(e.attr('id'), e)
-                });
-
-            });
-
-            function flip(type, $page) {
-                var isEnabled = true
-
-                if (isEnabled) {
-                    isEnabled = false;
-
-                    if (type.indexOf('cover') != -1) {
-                        coverIndex += 1
-
-                        setTimeout(function () {
-                            $('.book-bg').css('z-index', '2')
-                        }, 800);
-                    }
-
-
-
-                    if ($page.attr('data-dir') == "r") {
-                        $page.attr('data-dir', 'l').css('transform', 'rotateY(-180deg)');
-                        $page.next().attr('data-dir', 'l').css('transform', 'rotateY(0deg)');
-                        if (type == 'page') { pageIndex += 2 }
-                        if (type == 'cover') { coverIndex += 1 }
-                        console.log('pageIndex ' + pageIndex + ' coverIndex ' + coverIndex);
-                        setTimeout(function () {
-                            isEnabled = true
-                        }, 800);
-                    } else if ($page.attr('data-dir') == "l") {
-                        // debugger
-                        $page.attr('data-dir', 'r').css('transform', 'rotateY(180deg)');
-                        $page.prev().attr('data-dir', 'r').css('transform', 'rotateY(0deg)');
-                        if (type == 'page') { pageIndex -= 2 }
-                        if (type == 'cover') { coverIndex -= 1 }
-                        console.log('pageIndex ' + pageIndex + ' coverIndex ' + coverIndex);
-                        setTimeout(function () {
-                            isEnabled = true
-                        }, 800);
-
-                    };
-
-                };
-
-            }
-
-            $(".option").click(function () {
-                $(".option").removeClass("active");
-                $(this).addClass("active");
-            });
-
-            $(".option-bottom").click(function () {
-                $(".option-bottom").removeClass("active");
-                $(this).addClass("active");
-            });
-        </script>
+        <script src="story.js"></script>
 </body>
 
 </html>
