@@ -30,4 +30,4 @@ def illustration(story: str) -> str:
     Returns:
         prompt
     """
-    return f"Children's book art for:\n\n{story}"
+    return f"Children's book art for:\n\n{story} in the style of Dr.Seuss"
