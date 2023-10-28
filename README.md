@@ -1,4 +1,4 @@
-## StoryCraft
+## 📖📖StoryCraft
 This is an application that helps children improve their literacy, imagination and creativity at an early age. It does this by generating custom and personalized stories, tailored to their age and understanding level
 **Table of Contents**
 1. [Introduction](#introduction)
@@ -14,7 +14,7 @@ This is an application that helps children improve their literacy, imagination a
 In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or why it was created.
 In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or who its intended audience is
 This project provides a solution to ...
-## Features
+## ✨Features
 The features of this project include:
 *
 *
