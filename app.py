@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, render_template
-from utils import prompts, gpt3, stable_diffusion, functions, audio, firestore
+from utils import  functions, audio, firestore, speech_test
 from flask_cors import CORS
+from difflib import SequenceMatcher
 import uuid
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 
 
@@ -44,7 +45,65 @@ def generate_story():
         }
         return jsonify(response), 400 
     
-# @app.route('/stories', methods=['GET']) 
+@app.route('/compare_audio', methods=['POST']) 
+def compare_audio():
+    try:
+        data = request.get_json()
+        url = data.get('url', "")
+        test_text = data.get('text', "")
+        read_text = speech_test.transcribe_file(url)
+        similarity = SequenceMatcher(None, test_text, read_text).ratio()
+        response = {
+            'status': 'success',
+            'similarity': similarity,
+            'verdict': 'passed' if similarity > 0.8 else 'failed'
+        }
+        return jsonify(response)
+    except Exception as e:
+        response = {
+            'status': 'error',
+            'message': str(e)
+        }
+        return jsonify(response), 400
+        
+        
+@app.route('/expand_story', methods=['POST']) # To generate the story
+def expand_story():
+    try:
+        id = str(uuid.uuid4())
+        data = request.get_json()
+        story = data.get('story', "")
+        additions = data.get('additions', "")
+        story_array = functions.expand_story(story, additions)
+        story_quiz = functions.get_questions(story_array[0])
+        cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
+        
+        story_array = functions.expand_story(story, additions)
+        generated_narration = audio.get_audio(story_array[0], id)
+        
+        
+        response = {
+            'status': 'success',
+            'id': id,
+            'uid': story_array[4],
+            'story': story_array[1],
+            'parts': story_array[2],
+            'images': story_array[3],
+            'audio': generated_narration,
+            'questions': story_quiz,
+            'cover_art': cover_art_link
+        } 
+        
+        firestore.store_story(response)
+        return jsonify(response) 
+    
+    except Exception as e:
+        response = {
+            'status': 'error',
+            'message': str(e)
+        }
+        return jsonify(response), 400
+
 
 if __name__ == '__main__':
     app.run(debug=True) # Run the server in debug mode
