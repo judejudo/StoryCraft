@@ -31,3 +31,16 @@ def illustration(story: str) -> str:
         prompt
     """
     return f"Children's book art for:\n\n{story} in the style of Dr.Seuss"
+
+def cover_image(character: str, setting: str) -> str:
+    """
+    Generate the prompt for creating the cover image of a story.
+
+    Args:
+        character: Character of the story
+        setting: Setting of the story
+
+    Returns:
+        prompt
+    """
+    return f"Create a cover image for a children's book about {character} in {setting} in the style of Dr. Seuss.\n\n"

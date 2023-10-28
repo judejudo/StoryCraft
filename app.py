@@ -20,6 +20,8 @@ def generate_story():
         story_array = functions.generate_new_story(functions.get_data_from_request(request))            
         generated_narration = audio.get_audio(story_array[0], id)
         story_quiz = functions.get_questions(story_array[0])
+        cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
+        
         response = {
             'status': 'success',
             'id': id,
@@ -28,7 +30,8 @@ def generate_story():
             'parts': story_array[2],
             'images': story_array[3],
             'audio': generated_narration,
-            'questions': story_quiz
+            'questions': story_quiz,
+            'cover_art': cover_art_link
         } 
         
         firestore.store_story(response)

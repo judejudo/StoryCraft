@@ -3,7 +3,8 @@ import gpt3, prompts, stable_diffusion
 import json
 
 def get_data_from_request(request):
-    '''Get data from the request object and return it as a tuple'''
+    """Get data from the request and return it as a dictionary"""
+    
     data = request.get_json()
     uid = data.get('uid', "")
     name = data.get('name', "")
@@ -20,7 +21,8 @@ def get_data_from_request(request):
 
 
 def generate_new_story(uid, name, age, language, favorite_animal, exciting_place, special_interest, superhero, mood):
-    '''Generate a new story from the given parameters'''
+    """Generate a new story using GPT-3"""
+    
     plot = f"Short story of at least 5 paragraphs for a person named {name} who is {age} whose favorite animal is {favorite_animal}. They love to visit {exciting_place} and enjoy {special_interest}.  {superhero} appear. {mood}. Write the story in {language} "
     story = ""
 
@@ -61,9 +63,19 @@ def generate_new_story(uid, name, age, language, favorite_animal, exciting_place
             except Exception as e:
                     print(e)
                     
-    return [story,story_with_images,parts,img_list,uid] 
+    return [story,story_with_images,parts,img_list,uid,superhero,special_interest] 
 
 def get_questions(story):
+    """Generate questions from the story using GPT-3"""
+    
     answer_format = '{"questions": [{"question": "What is the name of the curious child in the story?","options":["Emily", "Lily", "Mia", "Noah"],"answer": "Lily"}]}'
     questions = json.loads(gpt3.generate_with_prompt(f"Generate questions in the format {answer_format} from the following story: \n {story} ",0.7))
     return(questions)
+
+def get_cover_art(character,setting):
+    try:
+        cover_art_prompt = prompts.cover_image(character,setting)
+        cover_art = stable_diffusion.generate_image(cover_art_prompt)
+        return cover_art
+    except Exception as e:
+        print(e)
