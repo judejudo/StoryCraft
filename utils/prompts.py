@@ -3,7 +3,7 @@ Generate prompts for different tasks.
 """
 
 
-def plot() -> str:
+def make_plot() -> str:
     """
     Generate the prompt for creating the plot of a story.
     

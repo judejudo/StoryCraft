@@ -1,5 +1,7 @@
 
-import gpt3, prompts, stable_diffusion
+from .gpt3 import generate_with_prompt
+from .prompts import make_plot, story_expansion, illustration, generate_plot, continue_story, cover_image
+from .stable_diffusion import generate_image
 import json
 
 def get_data_from_request(request):
@@ -28,16 +30,16 @@ def generate_new_story(uid, name, age, language, favorite_animal, exciting_place
 
     if len(plot) == 0:
         try:
-            plot_prompt = prompts.plot()
-            plot = gpt3.generate_with_prompt(plot_prompt, 0.8)
+            plot_prompt = make_plot()
+            plot = generate_with_prompt(plot_prompt, 0.8)
         except Exception as e:
                 print(e)
             #Create story prompt and Prompt GPT-3 to generate the story
     for _ in range(10):
         if len(story.split(". ")) < 20:
             try:
-                story_prompt = prompts.story_expansion(story)
-                story = gpt3.generate_with_prompt(story_prompt, 0.6)
+                story_prompt = story_expansion(story)
+                story = generate_with_prompt(story_prompt, 0.6)
             except Exception as e:
                     print(e)
 
@@ -56,8 +58,8 @@ def generate_new_story(uid, name, age, language, favorite_animal, exciting_place
 
         if "replicate.com" not in story:
             try:
-                image_prompt = prompts.illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
-                image_url = stable_diffusion.generate_image(image_prompt)
+                image_prompt = illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
+                image_url = generate_image(image_prompt)
                 img_list.append(image_url)
                 story_with_images += image_url + "\n\n"
             except Exception as e:
@@ -69,13 +71,13 @@ def get_questions(story):
     """Generate questions from the story using GPT-3"""
     
     answer_format = '{"questions": [{"question": "What is the name of the curious child in the story?","options":["Emily", "Lily", "Mia", "Noah"],"answer": "Lily"}]}'
-    questions = json.loads(gpt3.generate_with_prompt(f"Generate questions in the format {answer_format} from the following story: \n {story} ",0.7))
+    questions = json.loads(generate_with_prompt(f"Generate questions in the format {answer_format} from the following story: \n {story} ",0.7))
     return(questions)
 
 def get_cover_art(character,setting):
     try:
-        cover_art_prompt = prompts.cover_image(character,setting)
-        cover_art = stable_diffusion.generate_image(cover_art_prompt)
+        cover_art_prompt = cover_image(character,setting)
+        cover_art = generate_image(cover_art_prompt)
         return cover_art
     except Exception as e:
         print(e)
@@ -85,8 +87,8 @@ def get_plot(story):
     """Generate a plot using GPT-3"""
     plot = ""
     try:
-        plot_prompt = prompts.generate_plot(story)
-        plot = gpt3.generate_with_prompt(plot_prompt, 0.8)
+        plot_prompt = generate_plot(story)
+        plot = generate_with_prompt(plot_prompt, 0.8)
     except Exception as e:
             print(e)
     return plot       
@@ -99,8 +101,8 @@ def expand_story(original_story: str, additions: str):
     for _ in range(10):
         if len(story.split(". ")) < 20:
             try:
-                story_prompt = prompts.continue_story(original_story,additions)
-                story = gpt3.generate_with_prompt(story_prompt, 0.6)
+                story_prompt = continue_story(original_story,additions)
+                story = generate_with_prompt(story_prompt, 0.6)
             except Exception as e:
                     print(e)
 
@@ -119,8 +121,8 @@ def expand_story(original_story: str, additions: str):
 
         if "replicate.com" not in story:
             try:
-                image_prompt = prompts.illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
-                image_url = stable_diffusion.generate_image(image_prompt)
+                image_prompt = illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
+                image_url = generate_image(image_prompt)
                 img_list.append(image_url)
                 story_with_images += image_url + "\n\n"
             except Exception as e:
