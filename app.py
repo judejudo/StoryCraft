@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify, render_template
-from utils import  functions, audio, firestore, speech_test
+from utils import  functions, audio, firestore, speech_test,keys
 from flask_cors import CORS
 from difflib import SequenceMatcher
 import uuid
+import os
+os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
+os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
 
 app = Flask(__name__)
 CORS(app)
-
-
 
 @app.route('/', methods=['GET']) # To check if the server is running
 def test():
