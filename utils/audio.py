@@ -1,4 +1,4 @@
-from keys import eleven_key
+from .keys import eleven_key
 from elevenlabs import set_api_key
 import requests
 
