@@ -66,7 +66,8 @@
                     <button type="submit"><span>Login</span></button>
                 </form>
                 <p>OR</p>
-                <button id="googleSignIn"><img src="images/google.png" alt="Google Logo"><span>Login with Google</span></button>
+                <button id="googleSignIn"><img src="images/google.png" alt="Google Logo"><span>Login with
+                        Google</span></button>
 
                 <p>Don't have an account? <span onclick="gotoRegisterPage()">Register</span>
             </div>
@@ -138,6 +139,8 @@
             auth.createUserWithEmailAndPassword(email, password)
                 .then(function (userCredential) {
                     console.log(userCredential.uid);
+                    localStorage.setItem("uid", userCredential.uid);
+                    window.location.href ="http://localhost/StoryCraft/landing.html"
                     // Successful sign-up, you can redirect to another page or perform further actions here.
                 })
                 .catch(function (error) {
@@ -156,11 +159,12 @@
             auth.signInWithEmailAndPassword(loginEmail, loginPassword)
                 .then(function (user) {
                     // Successful sign-in, you can redirect to another page or perform further actions here.
-                    console.log(user);
+                    localStorage.setItem("uid", user.user.uid);
+                    window.location.href ="http://localhost/StoryCraft/landing.html"
                 })
                 .catch(function (error) {
                     // Handle sign-in errors here.
-                    console.error(error.message);
+                    alert("Invalid Credentials");
                 });
         });
 
@@ -170,7 +174,7 @@
             auth.signInWithPopup(provider)
                 .then(function (result) {
                     // Successful Google sign-in, you can redirect or perform further actions here.
-                    console.log(result);
+                    window.location.href= "http://localhost/StoryCraft/landing.html";
                 })
                 .catch(function (error) {
                     // Handle Google sign-in errors here.

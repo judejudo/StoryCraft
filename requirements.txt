@@ -6,3 +6,4 @@ protobuf==4.24.4
 replicate==0.15.3
 Requests==2.31.0
 google-cloud-speech
+Werkzeug==2.2.2
