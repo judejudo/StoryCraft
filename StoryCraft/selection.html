@@ -18,11 +18,11 @@
 <body>
     <nav class="navbar">
         <ul class="menu-logo">
-            <li><a class="logo" href="http://localhost/StoryCraft/landing.html">StoryCraft</a></li>
+            <li><a class="logo" href="./landing.html">StoryCraft</a></li>
         </ul>
         <ul class="menu-items">
             <li><a href="#">Build a story</a></li>
-            <li><a href="#"><span class="material-symbols-outlined">account_circle</span></a></li>
+            <li><a href="loginpage.html"><span class="material-symbols-outlined">account_circle</span></a></li>
             <li><a>
                     <select name="languages" id="lang">
                         <option value="english">English</option>
@@ -325,7 +325,7 @@
             let storyw = localStorage.getItem("story");
             console.log(responseJson)
             console.log(JSON.parse(storyw));
-            window.location.href = 'http://localhost/StoryCraft/storybook.html';
+            window.location.href = './storybook.html';
         }
     </script>
 </body>
