@@ -38,7 +38,10 @@ def generate_story():
             'images': story_array[3],
             'audio': generated_narration,
             'questions': story_quiz,
-            'cover_art': cover_art_link
+            'cover_art': cover_art_link,
+            'timestamp': firestore.timestamp,
+            'name': data[1],
+            'age': data[2],
         } 
         
         firestore.store_story(response)
