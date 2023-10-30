@@ -111,9 +111,7 @@ function recordAudio() {
     };
     firebase.initializeApp(config);
 
-    const bucketName = "sound_buckets";
-    const clientID = "1090577769307-lhl8kgfugamtlnocet53hhffr1rfb574.apps.googleusercontent.com";
-    const accessToken = "ya29.a0AfB_byA_HwI_WjkOznsD1GmrQ7EXuZitGa83Me9y-q1RfI-SzhWyZ8wkRrM1LCVjBjmsNEqbf6vupiOSnJ8P0dtxt6B6QEXXIWCHb8nt8zj5hVUDSs0h6jzk7Tl0TkC8x5BnD1xxG5dSRp2Itz_IGMxMqzRL80TiuAaCgYKAb8SARESFQGOcNnC12iAJtlX3vIz6jPYmqfsbQ0169";
+   
     // const accessToken = null;
     // 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
     var form = document.createElement("form");
