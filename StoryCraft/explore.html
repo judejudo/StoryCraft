@@ -104,6 +104,7 @@
             </li>
         </ul>
     </nav>
+    <h2 style="text-align: center;">Explore Stories By Others</h2>
     <div class="container" id="stories-container">
         <!-- Stories will be displayed here -->
     </div>
@@ -126,16 +127,19 @@
         const firebaseApp = initializeApp(firebaseConfig);
         const db = getFirestore(firebaseApp);
     
+       const stories = [];
+       const stories_id = [];
         // Function to fetch and display stories as JSON
         function fetchAndDisplayStories() {
             var storiesRef = collection(db, "stories");
     
             getDocs(storiesRef)
                 .then((querySnapshot) => {
-                    const stories = [];
+                    
                     querySnapshot.forEach((doc) => {
-                        displayStory(doc.data());
+                        displayStory(doc.data(), doc.id);
                         stories.push(doc.data());
+                        stories_id.push(doc.id);
                     });
                     console.log(JSON.stringify(stories, null, 2)); // Display stories as JSON in the console
                 })
@@ -147,10 +151,29 @@
         // Call the function to fetch and display stories
         fetchAndDisplayStories();
 
-        function displayStory(story) {
+        function displayStory(story, doc_id) {
             const container = document.getElementById("stories-container");
             const storyDiv = document.createElement("div");
             storyDiv.className = "story";
+            storyDiv.setAttribute("data-id", doc_id);
+            storyDiv.onclick = function() {
+                const id = this.getAttribute("data-id");
+                var storyRef = collection(db, "stories");
+                getDocs(storyRef)
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+
+                        if(doc.id == id) {
+                            console.log(JSON.stringify(doc.data()));
+                            localStorage.setItem("story", JSON.stringify(doc.data()));
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching stories:", error);
+                });
+                window.open("storybook.html", "_self");
+            }
             
             const uidElement = document.createElement("p");
             uidElement.className = "uid";
@@ -168,11 +191,17 @@
             const ageElement = document.createElement("p");
             ageElement.className = "timestamp";
             ageElement.textContent = "Age: " + story.age;
+
+            const coverElement = document.createElement("img");
+            coverElement.className = "timestamp";
+            coverElement.src = story.cover_art;
+            coverElement.style = "width: 100%; height: 200px; object-fit: cover;";
             
             const storyContent = document.createElement("div");
             storyContent.className = "story-content";
             storyContent.textContent = story.story.substring(0, 100) + "..."; // Display the first line of the stor
             
+            storyDiv.appendChild(coverElement);
             storyDiv.appendChild(timestampElement);
             storyDiv.appendChild(nameElement);
             storyDiv.appendChild(ageElement);
