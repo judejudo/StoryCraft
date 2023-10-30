@@ -3,7 +3,7 @@ from utils import functions
 from utils import audio
 from utils import firestore
 from utils import speech_test
-import keys
+from utils import keys
 from flask_cors import CORS
 from difflib import SequenceMatcher
 import uuid
