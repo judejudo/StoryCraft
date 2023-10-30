@@ -1,93 +1,119 @@
-from flask import Flask, request, jsonify
-from utils import prompts, gpt3, stable_diffusion
-from google.cloud import firestore
+from flask import Flask, request, jsonify, render_template
+from utils import functions
+from utils import audio
+from utils import firestore
+from utils import speech_test
+import keys
 from flask_cors import CORS
+from difflib import SequenceMatcher
+import uuid
+import os
+
+os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
+os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
 
 app = Flask(__name__)
-CORS(app)
-
-db = firestore.Client(project='a2sv-hackathon')
 
 
-@app.route('/', methods=['GET'])
+# CORS(app)
+
+@app.route('/', methods=['GET'])  # To check if the server is running
 def test():
-    return "Flask server is running successfully!"
+    return render_template('welcome.html')
 
 
-@app.route('/generate_story', methods=['POST'])
+@app.route('/generate_story', methods=['POST'])  # To generate the story
 def generate_story():
     try:
-        data = request.get_json()
-        uid = data.get('uid', "")
-        name = data.get('name', "")
-        age = data.get('age', "")
-        choices = data.get('choices', {})
-
-        language = choices[0].get('language', "")
-        favorite_animal = choices[0].get('favorite_animal', "")
-        exciting_place = choices[0].get('exciting_place', "")
-        special_interest = choices[0].get('special_interest', "")
-        superhero = choices[0].get('superhero', "")
-        mood = choices[0].get('mood', "")
-
-        plot = f"Short story of at least 5 paragraphs for a person named {name} who is {age} whose favorite animal is {favorite_animal}. They love to visit {exciting_place} and enjoy {special_interest}.  {superhero} appear. {mood}. Write the story in {language} "
-        story = ""
-
-        if len(plot) == 0:
-            try:
-                plot_prompt = prompts.plot()
-                plot = gpt3.generate_with_prompt(plot_prompt, 0.8)
-            except Exception as e:
-                print(e)
-
-        for _ in range(10):
-            if len(story.split(". ")) < 20:
-                try:
-                    story_prompt = prompts.story_expansion(story)
-                    story = gpt3.generate_with_prompt(story_prompt, 0.6)
-                except Exception as e:
-                    print(e)
-
-        # Combine the story with images
-        img_list = []
-        parts = story.split("\n\n")
-        parts = [part for part in parts if len(part) > 0]
-        story_with_images = ""
-
-        for i, part in enumerate(parts):
-            if "replicate.com" not in part:
-                story_with_images += part + "\n\n"
-            else:
-                image_url = part
-                story_with_images += image_url + "\n\n"
-
-            if "replicate.com" not in story:
-                try:
-                    image_prompt = prompts.illustration(f"{plot}\n\n{'' if i == 0 else parts[i - 1]}\n\n{part}")
-                    image_url = stable_diffusion.generate_image(image_prompt)
-                    img_list.append(image_url)
-                    story_with_images += image_url + "\n\n"
-                except Exception as e:
-                    print(e)
-
-        story_data = {
-            'uid': uid,
-            'story': story_with_images,
-            'timestamp': firestore.SERVER_TIMESTAMP
-        }
-
-        stories_ref = db.collection('stories')
-        stories_ref.add(story_data)
+        id = str(uuid.uuid4())
+        data = functions.get_data_from_request(request)
+        story_array = functions.generate_new_story(data[0], data[1], data[2], data[3], data[4], data[5], data[6],
+                                                   data[7], data[8])
+        generated_narration = audio.get_audio(story_array[0], id)
+        story_quiz = functions.get_questions(story_array[0])
+        cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
 
         response = {
             'status': 'success',
-            'uid': uid,
-            'story': story_with_images,
-            'parts': parts,
-            'images': img_list
+            'id': id,
+            'uid': story_array[4],
+            'story': story_array[1],
+            'parts': story_array[2],
+            'images': story_array[3],
+            'audio': generated_narration,
+            'questions': story_quiz,
+            'cover_art': cover_art_link,
+            'timestamp': firestore.timestamp,
+            'name': data[1],
+            'age': data[2],
         }
 
+        # firestore.store_story(response)
         return jsonify(response)
+
+    except Exception as e:
+        response = {
+            'status': 'error',
+            'message': str(e)
+        }
+        print(response)
+        return jsonify(response), 400
+
+
+@app.route('/compare_audio', methods=['POST'])
+def compare_audio():
+    try:
+        data = request.get_json()
+        print(data)
+        url = data.get('url', "")
+        test_text = data.get('text', "")
+        read_text = speech_test.transcribe_file(url)
+        similarity = SequenceMatcher(None, test_text, read_text).ratio()
+        response = {
+            'status': 'success',
+            'similarity': similarity,
+            'verdict': 'passed' if similarity > 0.8 else 'failed'
+        }
+        return jsonify(response)
+    except Exception as e:
+        response = {
+            'status': 'error',
+            'message': str(e)
+        }
+        print(response)
+        return jsonify(response), 400
+
+
+@app.route('/expand_story', methods=['POST'])  # To generate the story
+def expand_story():
+    try:
+        id = str(uuid.uuid4())
+        data = request.get_json()
+        story = data.get('story', "")
+        additions = data.get('additions', "")
+        story_array = functions.expand_story(story, additions)
+        story_quiz = functions.get_questions(story_array[0])
+        cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
+
+        story_array = functions.expand_story(story, additions)
+        generated_narration = audio.get_audio(story_array[0], id)
+
+        response = {
+            'status': 'success',
+            'id': id,
+            'uid': story_array[4],
+            'story': story_array[1],
+            'parts': story_array[2],
+            'images': story_array[3],
+            'audio': generated_narration,
+            'questions': story_quiz,
+            'cover_art': cover_art_link
+        }
+
+        firestore.store_story(response)
+        return jsonify(response)
+
     except Exception as e:
         response = {
             'status': 'error',
@@ -97,4 +123,4 @@ def generate_story():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)  # Run the server in debug mode
