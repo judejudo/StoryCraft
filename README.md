@@ -1,42 +1,58 @@
-## 📖📖StoryCraft
-This is an application that helps children improve their literacy, imagination and creativity at an early age. It does this by generating custom and personalized stories, tailored to their age and understanding level
+# 📖📖 StoryCraft: Nurturing Young Minds
+This is an application that helps children improve their literacy, imagination and creativity at an early age. It does this by generating custom and personalized stories tailored to their age and understanding level
 
 **Table of Contents**
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Installation Instructions](#installation-instructions)
 4. [Usage Guide](#usage-guide)
-5. [Contributing Guidelines](#contributing-guidelines)
-6. [License Information](#license-information)
-7. [Contact Information](#contact-information)
-8. [Acknowledgements](#acknowledgements)
-9. [References](#references)
-10. 
+5. [ScreenShots](#screenshots)
+6. [Acknowledgements](#acknowledgements)
+   
+    
 ## Introduction
-In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or why it was created.
-In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or who its intended audience is
-This project provides a solution to ...
+This project provides a solution to the problem of literacy among children. It was created to enhance reading skills among children, with the goal of improving their literacy and fostering a love for reading. The intended audience for this project is children of various age groups who are learning to read and their parents or caregivers.
 
 ## ✨Features
 The features of this project include:
-- Login and register page
-- Generate a story
-- Bookmark a story
-- Look up a word in the story
-- Do a quiz
-- See what stories others are creating
-- Share stories
-- Check out the leaderboard to see your progress
-- 
+- User-friendly login and registration.
+- Personalized story generation.
+- Bookmarking favorite stories for later.
+- Quick word look-up within the stories.
+- Fun and educational quizzes.
+- Sharing stories with friends and family.
+- A leaderboard to track reading progress.
+  
 ## Installation Instructions
 To install this project, follow these steps:
-1. Clone the repository from GitHub onto your local machine.
+1. Clone the repository from GitHub onto your local machine https://github.com/AsavaAsava/StoryCraft.git
 2. Open the cloned directory with Visual Studio Code or any other code editor you prefer.
-3. Run `npm install` command inside the root folder to install all dependencies required by the application.
-4. Make sure that Node.js and npm are installed on your computer before running the above commands. You can download them from https://nodejs
-5. You'll need an OpenAI account with access to GPT-3, and a Replicate (replicate.com) account.
+3. Run ```npm install``` command inside the root folder to install all dependencies required by the application.
+4. Make sure that Node.js and npm are installed on your computer before running the above commands. You can download them from [nodejs.org](https://nodejs.org/)
+5. You'll need an OpenAI account with access to GPT-3, and a Replicate account [replicate.com](https://replicate.com).
 6. Replace `<your_openai_api_key>` in `.env` file with your own API key.
+```
+export OPENAI_API_KEY=XXX
+```
 7. Replace `<your_replicate_token>` in `.env` file with your own token.
-8. To use the program, run it using Node.js on your local environment.
+```
+export REPLICATE_API_TOKEN=XXX
+```
 ## Usage Guide
-Use this guide for basic usage instructions:
+Run flask in the git bash terminal
+```
+flask run
+```
+This will start the flask web server and you can access the application
+## 📸 ScreenShots
+| <img src="StoryCraft-UI/images/readme/st1.jpg" width="450" height="300">  | <img src="StoryCraft-UI/images/readme/st2.jpg" width="450" height="300">  |
+| <img src="StoryCraft-UI/images/readme/st3.jpg" width="450" height="300">  | <img src="StoryCraft-UI/images/readme/st4.jpg" width="450" height="300">  |
+## Acknowledgements
+This project uses the following AI models:
+
+- OpenAI API
+- Stable Diffusion 
+- GPT-3 by Anthropic
+- ElevenLabs
+
+Thank you to the teams at OpenAI, Stability AI, ElevenLabs and Anthropic for developing these powerful AI models and making them accessible.
