@@ -6,10 +6,9 @@ This is an application that helps children improve their literacy, imagination a
 2. [Features](#features)
 3. [Installation Instructions](#installation-instructions)
 4. [Usage Guide](#usage-guide)
-5. [Contributing Guidelines](#contributing-guidelines)
-6. [License Information](#license-information)
-7. [Contact Information](#contact-information)
-8. [Acknowledgements](#acknowledgements)
+5. [ScreenShots](#screenshots)
+6. [Acknowledgements](#acknowledgements)
+   
     
 ## Introduction
 In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or why it was created.
@@ -50,9 +49,8 @@ flask run
 ```
 This will start the flask web server and you can access the application
 ## 📸 ScreenShots
-| <img src="img/imgs/s1.jpg" width="300" height="500">  | <img src="img/imgs/s4.jpg" width="300" height="500">  |
-| <img src="img/imgs/s7.jpg" width="300" height="500">  | <img src="img/imgs/s5.jpg" width="300" height="500">  |
-| <img src="img/imgs/s3.jpg" width="300" height="500">  | <img src="img/imgs/s6.jpg" width="300" height="500">  |
+| <img src="StoryCraft-UI/readme/st1.jpg" width="300" height="500">  | <img src="StoryCraft-UI/readme/st2.jpg" width="300" height="500">  |
+| <img src="StoryCraft-UI/readme/st3.jpg" width="300" height="500">  | <img src="StoryCraft-UI/readme/st4.jpg" width="300" height="500">  |
 ## Acknowledgements
 This project uses the following AI models:
 
