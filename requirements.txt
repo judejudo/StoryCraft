@@ -1,5 +1,9 @@
+elevenlabs==0.2.26
 Flask==2.2.2
+flask_cors==4.0.0
 openai==0.23.0
 protobuf==4.24.4
-pyttsx3==2.90
 replicate==0.15.3
+Requests==2.31.0
+google-cloud-speech
+Werkzeug==2.2.2
