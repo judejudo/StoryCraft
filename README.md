@@ -10,7 +10,6 @@ This is an application that helps children improve their literacy, imagination a
 6. [License Information](#license-information)
 7. [Contact Information](#contact-information)
 8. [Acknowledgements](#acknowledgements)
-9. [References](#references)
     
 ## Introduction
 In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or why it was created.
@@ -30,10 +29,7 @@ The features of this project include:
   
 ## Installation Instructions
 To install this project, follow these steps:
-1. Clone the repository from GitHub onto your local machine.
-```
-flutter pub get
-```
+1. Clone the repository from GitHub onto your local machine https://github.com/AsavaAsava/StoryCraft.git
 3. Open the cloned directory with Visual Studio Code or any other code editor you prefer.
 4. Run ```npm install``` command inside the root folder to install all dependencies required by the application.
 5. Make sure that Node.js and npm are installed on your computer before running the above commands. You can download them from https://nodejs
@@ -48,11 +44,15 @@ export REPLICATE_API_TOKEN=XXX
 ```
 11. To use the program, run it using Node.js on your local environment.
 ## Usage Guide
-Using the git bash terminal run flask
+Run flask in the git bash terminal
 ```
 flask run
 ```
 This will start the flask web server and you can access the application
+## 📸 ScreenShots
+| <img src="img/imgs/s1.jpg" width="300" height="500">  | <img src="img/imgs/s4.jpg" width="300" height="500">  |
+| <img src="img/imgs/s7.jpg" width="300" height="500">  | <img src="img/imgs/s5.jpg" width="300" height="500">  |
+| <img src="img/imgs/s3.jpg" width="300" height="500">  | <img src="img/imgs/s6.jpg" width="300" height="500">  |
 ## Acknowledgements
 This project uses the following AI models:
 
