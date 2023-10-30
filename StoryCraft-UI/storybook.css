@@ -60,12 +60,13 @@ body {
 .container {
     margin-top: 20px;
     width: 100%;
-    height: 86vh;
+    height: 89vh;
     background: linear-gradient(to right,
             #ffbd59 0%,
             #ffbd59 70%,
             white 70%,
             white 100%);
+
 }
 
 .container .left {
@@ -107,9 +108,9 @@ body {
 
 
 .book-wrap {
-    height: 600px;
+    height: 800px;
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     margin: 40px 0px 0 500px;
     position: relative;
     perspective: 1500px;
@@ -243,6 +244,29 @@ body {
         font-size: 20px;
         color: #422c33;
         font-weight: 500;
+
+        & .story-span-text {
+            position: relative;
+
+            & .hidden-meaning {
+                position: absolute !important;
+                top: -90px;
+                border-radius: 10px;
+                width: 100px;
+                padding: 10px;
+                font-weight: 400;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                font-size: 15px;
+                visibility: hidden;
+            }
+        }
+
+
+        .story-span-text:hover {
+            border-bottom: 2px solid rgb(255, 210, 143);
+        }
     }
 
     & .page-audio {
@@ -345,7 +369,7 @@ body {
             font-size: 30px;
         }
 
-        & .tooltip{
+        & .tooltip {
             font-size: 14px;
             position: absolute;
             top: 0;
@@ -358,14 +382,14 @@ body {
             border-radius: 7px;
             background: transparent;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        
+
         }
 
         &:hover {
             cursor: pointer;
         }
 
-        &:hover .tooltip{
+        &:hover .tooltip {
             top: -40px;
             opacity: 1;
             visibility: visible;
@@ -373,18 +397,29 @@ body {
         }
     }
 
-    .btn-download:hover, .btn-download:hover .tooltip{
+    .btn-download:hover,
+    .btn-download:hover .tooltip {
         background-color: #1877F2;
         color: white;
     }
 
-    .btn-share:hover, .btn-share:hover .tooltip{
+    .btn-share:hover,
+    .btn-share:hover .tooltip {
         background-color: #CD201F;
         color: white;
     }
 
-    .btn-regen:hover, .btn-regen:hover:hover .tooltip{
+    .btn-regen:hover,
+    .btn-regen:hover:hover .tooltip {
         background-color: #00bf00;
-        color: white;   
+        color: white;
     }
 }
+
+
+
+
+
+/* .active-meaning {
+    visibility: visible;
+} */

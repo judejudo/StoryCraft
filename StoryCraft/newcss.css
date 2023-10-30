@@ -1,0 +1,63 @@
+html,
+body {
+  background-color: aqua;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  height: 90%;
+  justify-content: center;
+  margin: 5%;
+  width: 90%;
+  background-color: aqua;
+}
+
+.aspect {
+  padding-bottom: 70%;
+  position: relative;
+  width: 100%;
+}
+
+.aspect-inner {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.flipbook {
+  margin-top: 30px;
+  height: 100%;
+  transition: margin-left 0.25s ease-out;
+  width: 100%;
+  background-color: antiquewhite;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.flipbook .page {
+  margin-top: 50px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flipbook .page img {
+  height: 70%;
+}
+
+.flipbook .page p {
+  background-color: antiquewhite;
+  float: right;
+}
