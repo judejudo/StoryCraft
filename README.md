@@ -11,9 +11,7 @@ This is an application that helps children improve their literacy, imagination a
    
     
 ## Introduction
-In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or why it was created.
-In this section, you can provide a brief introduction about your project. This could include information such as what problem it solves or who its intended audience is
-This project provides a solution to ...
+This project provides a solution to the problem of literacy among children. It was created to enhance reading skills among children, with the goal of improving their literacy and fostering a love for reading. The intended audience for this project is children of various age groups who are learning to read and their parents or caregivers.
 
 ## ✨Features
 The features of this project include:
