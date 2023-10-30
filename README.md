@@ -39,7 +39,6 @@ export OPENAI_API_KEY=XXX
 ```
 export REPLICATE_API_TOKEN=XXX
 ```
-11. To use the program, run it using Node.js on your local environment.
 ## Usage Guide
 Run flask in the git bash terminal
 ```
