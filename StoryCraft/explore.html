@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <link rel="stylesheet" href="explore.css"> -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka One&family=Open+Sans&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- <link rel="stylesheet" href="loader.css"> -->
+    <title>Discover Stories</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"></script>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+
+        .story {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .story h2 {
+            font-size: 1.2em;
+            margin: 0 0 10px;
+        }
+
+        .story p {
+            font-size: 1em;
+            line-height: 1.4;
+        }
+
+        .date {
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            width: 85%;
+            margin: auto;
+            background: #fff;
+            margin-top: 30px;
+        }
+
+        .navbar ul li {
+            display: inline;
+            margin: 20px;
+            font-family: "Roboto";
+            font-size: 18px;
+        }
+
+        .navbar a {
+            color: #422c33;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #ffe07d;
+        }
+
+        .navbar ul li .logo {
+            color: #fec200;
+            font-family: "Fredoka One";
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul class="menu-logo">
+            <li><a class="logo" href="./landing.html">StoryCraft</a></li>
+        </ul>
+        <ul class="menu-items">
+            <li><a href="#">Build a story</a></li>
+            <li><a href="loginpage.html"><span class="material-symbols-outlined">account_circle</span></a></li>
+            <li><a>
+                    <select name="languages" id="lang">
+                        <option value="english">English</option>
+                        <option value="kiswahili">Swahili</option>
+                        <option value="french">French</option>
+                    </select>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="story">
+            <h2>Story Title 1</h2>
+            <p>Once upon a time, in a faraway land, there lived a young girl named Alice. She...</p>
+            <p class="date">October 20, 2023</p>
+        </div>
+        <div class="story">
+            <h2>Story Title 2</h2>
+            <p>In a quiet village nestled among the rolling hills, there was a blacksmith named John...</p>
+            <p class="date">October 25, 2023</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="stories-container">
+            <!-- Stories will be displayed here -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js';
+        import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js';
+
+        // Initialize Firebase with your own configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDiPkM01PcS84zFdsbCrXkMbPWDbX8bHqM",
+            authDomain: "a2sv-hackathon.firebaseapp.com",
+            projectId: "a2sv-hackathon",
+            storageBucket: "a2sv-hackathon.appspot.com",
+            messagingSenderId: "335557285236",
+            appId: "1:335557285236:web:95de9a7b59613041ef8821",
+            measurementId: "G-TJ192BJEB9"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to your Firebase database
+        var database = firebase.firestore();
+
+        // Function to fetch and display stories
+        function displayStories() {
+            var container = document.getElementById("stories-container");
+            container.innerHTML = ""; // Clear existing content
+            var storiesRef = db.collection("stories");
+            console.log("Storiesssssss");
+            
+            storiesRef.get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    var story = doc.data();
+                    var storyDiv = document.createElement("div");
+                    storyDiv.className = "story";
+                    var title = document.createElement("h2");
+                    title.textContent = story.title;
+                    var content = document.createElement("p");
+                    content.textContent = story.content;
+                    var date = document.createElement("p");
+                    date.className = "date";
+                    date.textContent = story.date;
+                    storyDiv.appendChild(title);
+                    storyDiv.appendChild(content);
+                    storyDiv.appendChild(date);
+                    container.appendChild(storyDiv);
+                });
+            });
+        }
+
+        // Call the function to display stories
+        displayStories();
+    </script>
+
+
+</body>
+
+</html>
