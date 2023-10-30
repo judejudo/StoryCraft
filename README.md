@@ -39,13 +39,26 @@ flutter pub get
 5. Make sure that Node.js and npm are installed on your computer before running the above commands. You can download them from https://nodejs
 6. You'll need an OpenAI account with access to GPT-3, and a Replicate (replicate.com) account.
 7. Replace `<your_openai_api_key>` in `.env` file with your own API key.
-   ```
+```
 export OPENAI_API_KEY=XXX
 ```
 9. Replace `<your_replicate_token>` in `.env` file with your own token.
-    ```
+```
 export REPLICATE_API_TOKEN=XXX
 ```
 11. To use the program, run it using Node.js on your local environment.
 ## Usage Guide
-Use this guide for basic usage instructions:
+Using the git bash terminal run flask
+```
+flask run
+```
+This will start the flask web server and you can access the application
+## Acknowledgements
+This project uses the following AI models:
+
+- OpenAI API
+- Stable Diffusion 
+- GPT-3 by Anthropic
+- ElevenLabs
+
+Thank you to the teams at OpenAI, Stability AI, ElevenLabs and Anthropic for developing these powerful AI models and making them accessible.
