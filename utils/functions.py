@@ -6,7 +6,6 @@ import json
 
 def get_data_from_request(request):
     """Get data from the request and return it as a dictionary"""
-    
     data = request.get_json()
     uid = data.get('uid', "")
     name = data.get('name', "")

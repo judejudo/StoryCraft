@@ -8,27 +8,32 @@ from flask_cors import CORS
 from difflib import SequenceMatcher
 import uuid
 import os
+
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
 
 app = Flask(__name__)
-CORS(app)
 
-@app.route('/', methods=['GET']) # To check if the server is running
+
+# CORS(app)
+
+@app.route('/', methods=['GET'])  # To check if the server is running
 def test():
     return render_template('welcome.html')
 
 
-@app.route('/generate_story', methods=['POST']) # To generate the story
+@app.route('/generate_story', methods=['POST'])  # To generate the story
 def generate_story():
     try:
         id = str(uuid.uuid4())
         data = functions.get_data_from_request(request)
-        story_array = functions.generate_new_story(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8])
+        story_array = functions.generate_new_story(data[0], data[1], data[2], data[3], data[4], data[5], data[6],
+                                                   data[7], data[8])
         generated_narration = audio.get_audio(story_array[0], id)
         story_quiz = functions.get_questions(story_array[0])
         cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
-        
+
         response = {
             'status': 'success',
             'id': id,
@@ -42,22 +47,25 @@ def generate_story():
             'timestamp': firestore.timestamp,
             'name': data[1],
             'age': data[2],
-        } 
-        
-        firestore.store_story(response)
-        return jsonify(response) 
-    
+        }
+
+        # firestore.store_story(response)
+        return jsonify(response)
+
     except Exception as e:
         response = {
             'status': 'error',
             'message': str(e)
         }
-        return jsonify(response), 400 
-    
-@app.route('/compare_audio', methods=['POST']) 
+        print(response)
+        return jsonify(response), 400
+
+
+@app.route('/compare_audio', methods=['POST'])
 def compare_audio():
     try:
         data = request.get_json()
+        print(data)
         url = data.get('url', "")
         test_text = data.get('text', "")
         read_text = speech_test.transcribe_file(url)
@@ -73,10 +81,11 @@ def compare_audio():
             'status': 'error',
             'message': str(e)
         }
+        print(response)
         return jsonify(response), 400
-        
-        
-@app.route('/expand_story', methods=['POST']) # To generate the story
+
+
+@app.route('/expand_story', methods=['POST'])  # To generate the story
 def expand_story():
     try:
         id = str(uuid.uuid4())
@@ -86,11 +95,10 @@ def expand_story():
         story_array = functions.expand_story(story, additions)
         story_quiz = functions.get_questions(story_array[0])
         cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
-        
+
         story_array = functions.expand_story(story, additions)
         generated_narration = audio.get_audio(story_array[0], id)
-        
-        
+
         response = {
             'status': 'success',
             'id': id,
@@ -101,11 +109,11 @@ def expand_story():
             'audio': generated_narration,
             'questions': story_quiz,
             'cover_art': cover_art_link
-        } 
-        
+        }
+
         firestore.store_story(response)
-        return jsonify(response) 
-    
+        return jsonify(response)
+
     except Exception as e:
         response = {
             'status': 'error',
@@ -115,4 +123,4 @@ def expand_story():
 
 
 if __name__ == '__main__':
-    app.run(debug=True) # Run the server in debug mode
+    app.run(debug=True)  # Run the server in debug mode

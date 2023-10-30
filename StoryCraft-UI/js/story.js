@@ -1,9 +1,50 @@
 let story = JSON.parse(localStorage.getItem("story"));
-let pageImages = story.images.reverse();
-let paragraphs = story.parts.reverse();
+let pageImages = story.images;
+let paragraphs = story.parts;
+let questions = story.questions;
 let clickNum = 0;
-console.log(paragraphs)
+let questionNum = 0;
 let clickableParagraphs = [];
+let pageCount = story.images.length;
+var flipbookEL = document.getElementById('flipbook');
+var moreAction = document.getElementById('moreOptions');
+let phrase = "";
+let pageIndex = 1;
+const BASE_URL = 'http://127.0.0.1:5000/';
+let dataArray = [];
+let recorder;
+let audioIN = { audio: true }
+let start = document.getElementById("startRecording");
+
+var config = {
+    apiKey: "",
+    authDomain: "a2sv-hackathon.firebaseapp.com",
+    projectId: "a2sv-hackathon",
+    storageBucket: "a2sv-hackathon.appspot.com",
+    messagingSenderId: "335557285236",
+    appId: "1:335557285236:web:95de9a7b59613041ef8821",
+    measurementId: "G-TJ192BJEB9"
+};
+firebase.initializeApp(config);
+
+const bucketName = "sound_buckets";
+const clientID = "";
+const accessToken = "";
+var form = document.createElement("form");
+
+document.getElementById("sourceAudio").src = story.audio;
+
+$(".option").click(function () {
+    $(".option").removeClass("active");
+    $(this).addClass("active");
+});
+
+$(".option-bottom").click(function () {
+    $(".option-bottom").removeClass("active");
+    $(this).addClass("active");
+});
+
+
 for (let i = 0; i < paragraphs.length; i++) {
     let splits = paragraphs[i].match(/\b(\w+\W+)/g);
     let html = `<p>`;
@@ -14,19 +55,19 @@ for (let i = 0; i < paragraphs.length; i++) {
     clickableParagraphs.push(html);
 }
 
-let pageCount = story.images.length;
-var flipbookEL = document.getElementById('flipbook');
-var moreAction = document.getElementById('moreOptions');
+
 for (let i = 0; i < pageCount; i++) {
     flipbookEL.innerHTML += `<div class="page">
                                 <div class="image-container">
                                     <img src="${pageImages[i]}" alt="Character Image" draggable="false">
                                 </div>
-                                <div class="text-container">
+                                <div class="text-container" id="text-container">
                                     <p>${clickableParagraphs[i]}</p>
                                 </div>
+                                
                             </div>`;
 }
+
 const texts = document.querySelectorAll('.hidden-meaning');
 const hoverTexts = document.querySelectorAll('.story-span-text');
 
@@ -34,33 +75,93 @@ hoverTexts.forEach(text => {
     text.style.position = "relative";
 
 });
+
 texts.forEach(text => {
     text.style.visibility = "hidden";
     text.style.position = "absolute";
     text.style.top = "-90px";
-    text.style.width = "100px";
+    text.style.width = "250px";
     text.style.padding = "10px";
     text.style.fontWeight = "400";
     text.style.left = "0px";
     text.style.color = "white";
     text.style.borderRadius = "10px";
     text.style.fontSize = "15px";
-    text.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    text.style.backgroundColor = "#422c33";
 });
 
-let audioIN = { audio: true }
-
-let start = document.getElementById("startRecording");
 
 start.addEventListener('click', recordAudio);
 
+
+function explorePage() {
+    window.open("explore.html", "_self");
+}
+
+async function nextStep(value) {
+    let fullStory = "";
+    for (let index = 0; index < paragraphs.length; index++) {
+        fullStory += paragraphs[index]
+    }
+
+    const jsonBody = {
+        "story": fullStory,
+        "additions": value
+    }
+
+
+    const response = await fetch(BASE_URL + 'expand_story', {
+        method: 'POST',
+        body: JSON.stringify(jsonBody),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const responseJson = await response.json();
+    localStorage.removeItem("story");
+    localStorage.setItem("story", JSON.stringify(responseJson));
+    window.open("storybook.html", "_self");
+}
+
+
+function getPhrase() {
+    const regex = /.*?(\.)(?=\s[A-Z])/;
+    phrase = regex.exec(paragraphs[1])[0];
+}
+
+function setQuestion() {
+    document.getElementById("qtext").innerHTML = questions.questions[questionNum].question;
+    let choiceBtns = document.getElementById("choices");
+    choiceBtns.innerHTML = "";
+    document.getElementById("answerText").innerHTML = "";
+    for (let m = 0; m < questions.questions[questionNum].options.length; m++) {
+        choiceBtns.innerHTML += `<button onclick="checkQuestion('${questions.questions[questionNum].options[m]}')" id="choice${m + 1}">${questions.questions[questionNum].options[m]}</button>`;
+    }
+}
+
+function setRecording() {
+    document.getElementById("qtext").innerHTML = "Read and record the sentence below";
+    document.getElementById("choices").remove();
+    document.getElementById("answerContainer").remove();
+    let phraseCont = document.getElementById("phrase");
+    phraseCont.innerHTML = phrase;
+    phraseCont.style.fontFamily = "Poppin";
+    document.getElementById("recording-container").style.visibility = "visible";
+}
+
+
+
 function openQuiz(boolean) {
+    questionNum = 0;
     let container = document.getElementById("quizContainer");
+    let audioContainer = document.getElementById("recording-container");
     if (boolean) {
         container.style.visibility = "visible";
     }
     if (!boolean) {
         container.style.visibility = "hidden";
+        audioContainer.style.visibility = "hidden";
     }
 }
 
@@ -95,33 +196,8 @@ function recordAudio() {
         }
     }
 
-    // let audioBtn = document.getElementById("newAudio");
-
-    let dataArray = [];
-    let recorder;
-
-    var config = {
-        apiKey: "AIzaSyDiPkM01PcS84zFdsbCrXkMbPWDbX8bHqM",
-        authDomain: "a2sv-hackathon.firebaseapp.com",
-        projectId: "a2sv-hackathon",
-        storageBucket: "a2sv-hackathon.appspot.com",
-        messagingSenderId: "335557285236",
-        appId: "1:335557285236:web:95de9a7b59613041ef8821",
-        measurementId: "G-TJ192BJEB9"
-    };
-    firebase.initializeApp(config);
-
-    const bucketName = "sound_buckets";
-    const clientID = "1090577769307-lhl8kgfugamtlnocet53hhffr1rfb574.apps.googleusercontent.com";
-    const accessToken = "ya29.a0AfB_byA_HwI_WjkOznsD1GmrQ7EXuZitGa83Me9y-q1RfI-SzhWyZ8wkRrM1LCVjBjmsNEqbf6vupiOSnJ8P0dtxt6B6QEXXIWCHb8nt8zj5hVUDSs0h6jzk7Tl0TkC8x5BnD1xxG5dSRp2Itz_IGMxMqzRL80TiuAaCgYKAb8SARESFQGOcNnC12iAJtlX3vIz6jPYmqfsbQ0169";
-    // const accessToken = null;
-    // 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
-    var form = document.createElement("form");
-
     async function upload3(blobFile) {
-        let filename = 'recording.flac';
-        console.log(filename);
-        console.log(filename);
+        let filename = Math.floor(Date.now() / 1000) + '-recording.flac';
         let response = await fetch(
             `https://storage.googleapis.com/upload/storage/v1/b/${bucketName}/o?uploadType=media&name=${filename}`,
             {
@@ -133,7 +209,6 @@ function recordAudio() {
                 body: blobFile,
             }
         );
-
         let result = await response.json();
         if (result.mediaLink) {
             sendAudioFile(filename);
@@ -141,7 +216,8 @@ function recordAudio() {
                 `Success to upload ${filename}. You can access it to ${result.mediaLink}`
             );
         } else {
-            alert(`Failed to upload ${filename}`);
+            // window.open("errorpage.html", "_self");
+            console.log("Not sent")
         }
 
     }
@@ -158,7 +234,7 @@ function recordAudio() {
         // Parameters to pass to OAuth 2.0 endpoint.
         var params = {
             client_id: clientID,
-            redirect_uri: "http://localhost/StoryBook/hellonearth.html/",
+            redirect_uri: "http://localhost:5000/",
             response_type: "token",
             scope: "https://www.googleapis.com/auth/devstorage.read_write",
             include_granted_scopes: "true",
@@ -175,72 +251,16 @@ function recordAudio() {
             form.appendChild(input);
         }
 
-        // Add form to page and submit it to open the OAuth 2.0 endpoint.
         document.body.appendChild(form);
         form.submit();
-        // window.location.href = "http://localhost/StoryCraft/hellonearth.html"
     }
 
-    async function uploadAudio2(blobFile) {
-        let filename = Math.floor(Date.now() / 1000) + '-recording.flac';
-        let response = await fetch(
-            `https://storage.googleapis.com/upload/storage/v1/b/${bucketName}/o?uploadType=media&name=${filename}`,
-            {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "audio/flac",
-                    Authorization: `Bearer ${accessToken}`
-                },
-                body: blobFile
-            });
-        let result = await response.json();
-        if (result.mediaLink) {
-            alert(
-                `Success to upload ${filename}. You can access it to ${result.mediaLink}`
-            );
-        } else {
-            alert(`Failed to upload ${filename}`);
-        }
-    }
 
-    async function uploadAudio(blobAudio) {
-        var storageRef = firebase.storage().ref();
-        var filename = Math.floor(Date.now() / 1000) + '-recording.flac';
-
-        var uploadTask = storageRef.child(filename).put(blobAudio);
-
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                    case firebase.storage.TaskState.PAUSED: // or 'paused'
-                        console.log('Upload is paused');
-                        break;
-                    case firebase.storage.TaskState.RUNNING: // or 'running'
-                        console.log('Upload is running');
-                        break;
-                }
-            },
-            (error) => {
-                // Handle unsuccessful uploads
-            },
-            () => {
-                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                    console.log('File available at', downloadURL);
-                    // sendAudioFile(downloadURL);
-                });
-            }
-        );
-    }
-    const BASE_URL = 'http://127.0.0.1:5000/';
     async function sendAudioFile(fileUrl) {
         const jsonBody = {
             "url": fileUrl,
-            "text": "lola, lola, lola"
+            "text": phrase
         }
-
-        console.log(JSON.stringify(jsonBody));
 
         const response = await fetch(BASE_URL + 'compare_audio', {
             method: 'POST',
@@ -249,6 +269,11 @@ function recordAudio() {
                 'Content-Type': 'application/json'
             }
         });
+
+        const responseJson = await response.json();
+        document.getElementById("similarity-score").style.visibility = "visible";
+        let similarity = Math.round(responseJson.similarity * 100);
+        document.getElementById("similarity").innerHTML = similarity + " %";
     };
 
     function handlerFunction(stream) {
@@ -259,23 +284,21 @@ function recordAudio() {
         setTimeout(() => {
             recorder.stop();
             recordingtxt.innerHTML = "Done!"
-        }, 7000);
+        }, 10000);
         recorder.ondataavailable = async (e) => {
             dataArray.push(e.data);
             if (recorder.state == "inactive") {
                 let blob = new Blob(dataArray, { type: "audio/flac" });
-                console.log(blob);
                 document.getElementById("newAudio").src = URL.createObjectURL(blob);
                 const myFile = new File([blob], 'audio.flac', {
                     type: blob.type,
                 });
-                // if (accessToken == null) {
-                //     oauthSignIn();
-                // }
-                // else {
-                    // upload3(blob);
-                    sendAudioFile("output.mp3")
-                // }
+                if (accessToken == null) {
+                    oauthSignIn();
+                }
+                else {
+                    upload3(blob);
+                }
             }
         };
 
@@ -290,23 +313,37 @@ function recordAudio() {
     startusingBrowserMicrophone(true);
 }
 
-let pageIndex = 1;
-showPage(pageIndex)
+
 
 function plusPage(n) {
     showPage(pageIndex += n);
 }
 
 function checkQuestion(answer) {
-    console.log(answer);
-    var qtext = document.getElementById("qtext");
-    var leftChoice = document.getElementById("leftChoice");
-    var rightChoice = document.getElementById("rightChoice");
+    let qAnswer = questions.questions[questionNum].answer;
+    let checkText = document.getElementById("answerText");
 
-    //check if answer is correct
-    qtext.innerHTML = "Where is Tim from?";
-    leftChoice.innerHTML = "Home";
-    rightChoice.innerHTML = "Somewhere";
+    if (answer == qAnswer) {
+        checkText.style.color = "rgb(0, 212, 0)";
+        checkText.innerHTML = "Correct!!!";
+        document.getElementById("imgCorrect").style.visibility = "visible";
+        questionNum++;
+    } else {
+        checkText.style.color = "red";
+        checkText.innerHTML = "Incorrect. The correct answer is: " + qAnswer;
+        questionNum++;
+    }
+
+
+    setTimeout(() => {
+        if (questionNum == questions.questions.length) {
+            document.getElementById("imgCorrect").style.visibility = "hidden";
+            setRecording();
+        } else {
+            document.getElementById("imgCorrect").style.visibility = "hidden";
+            setQuestion();
+        }
+    }, 2500);
 }
 
 function showPage(n) {
@@ -331,15 +368,7 @@ function showOptions() {
     }
 }
 
-$(".option").click(function () {
-    $(".option").removeClass("active");
-    $(this).addClass("active");
-});
 
-$(".option-bottom").click(function () {
-    $(".option-bottom").removeClass("active");
-    $(this).addClass("active");
-});
 
 function getMeaning(e, word) {
     const texts = document.querySelectorAll('.text-meaning');
@@ -363,3 +392,8 @@ const dataProcess = (event, res, w) => {
     }
     show.style.visibility = "visible";
 }
+
+showPage(pageIndex);
+setQuestion();
+getPhrase();
+
