@@ -49,8 +49,8 @@ flask run
 ```
 This will start the flask web server and you can access the application
 ## 📸 ScreenShots
-| <img src="StoryCraft-UI/readme/st1.jpg" width="450" height="300">  | <img src="StoryCraft-UI/readme/st2.jpg" width="450" height="300">  |
-| <img src="StoryCraft-UI/readme/st3.jpg" width="450" height="300">  | <img src="StoryCraft-UI/readme/st4.jpg" width="450" height="300">  |
+| <img src="StoryCraft-UI/images/readme/st1.jpg" width="450" height="300">  | <img src="StoryCraft-UI/images/readme/st2.jpg" width="450" height="300">  |
+| <img src="StoryCraft-UI/images/readme/st3.jpg" width="450" height="300">  | <img src="StoryCraft-UI/images/readme/st4.jpg" width="450" height="300">  |
 ## Acknowledgements
 This project uses the following AI models:
 
