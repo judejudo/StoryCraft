@@ -5,6 +5,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Roboto';
+    overflow-y: hidden;
 }
 
 
@@ -156,7 +157,6 @@
         outline: 0;
         border: 1px solid lightgray;
         color: rgb(85, 85, 85);
-        ;
 
         &:focus {
             border: 1px solid #fec200;
@@ -199,6 +199,39 @@
     margin-top: 40px;
 }
 
+.loader-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255, 255, 255, 0.95);
+    position: absolute;
+    box-sizing: border-box;
+    z-index: 2;
+    text-align: center;
+    visibility: hidden;
+
+    & img {
+        height: 300px;
+        margin-top: 200px;
+    }
+
+    & h1 {
+        color: #422c33;
+        text-align: center;
+        font-family: 'Poppin';
+        text-transform: uppercase;
+        font-size: 25px;
+        position: relative;
+    }
+
+    & h1:after {
+        position: absolute;
+        content: "";
+        margin-left: 5px;
+        -webkit-animation: Dots 4s cubic-bezier(0, .39, 1, .68) infinite;
+        animation: Dots 4s cubic-bezier(0, .39, 1, .68) infinite;
+    }
+}
+
 .line {
     cursor: pointer;
     height: 7px;
@@ -222,7 +255,7 @@
     text-align: center;
     margin-top: 40px;
 
-    & button{
+    & button {
         border: 3px solid #fec200;
         color: white;
         padding: 10px 17px;
@@ -232,7 +265,7 @@
         border-radius: 30px;
         transition: all 0.4s ease-in-out;
 
-        &:hover{
+        &:hover {
             cursor: pointer;
             color: #fec200;
             box-shadow: inset 6.5em 0 0 0 white;
@@ -247,5 +280,58 @@
 
     to {
         opacity: 1;
+    }
+}
+
+
+@-webkit-keyframes Dots {
+    0% {
+        content: "";
+    }
+
+    20% {
+        content: ".";
+    }
+
+    40% {
+        content: ". .";
+    }
+
+    60% {
+        content: ". . .";
+    }
+
+    80% {
+        content: ". . . .";
+    }
+
+    100% {
+        content: ". . . . .";
+    }
+}
+
+@keyframes Dots {
+    0% {
+        content: "";
+    }
+
+    20% {
+        content: ".";
+    }
+
+    40% {
+        content: ". .";
+    }
+
+    60% {
+        content: ". . .";
+    }
+
+    80% {
+        content: ". . . .";
+    }
+
+    100% {
+        content: ". . . . .";
     }
 }
