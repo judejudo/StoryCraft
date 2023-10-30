@@ -16,7 +16,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIA
 app = Flask(__name__)
 
 
-# CORS(app)
+CORS(app)
 
 @app.route('/', methods=['GET'])  # To check if the server is running
 def test():
@@ -49,7 +49,7 @@ def generate_story():
             'age': data[2],
         }
 
-        # firestore.store_story(response)
+        firestore.store_story(response)
         return jsonify(response)
 
     except Exception as e:
