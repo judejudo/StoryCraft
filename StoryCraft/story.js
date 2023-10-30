@@ -288,45 +288,6 @@ function recordAudio() {
     }
 
     startusingBrowserMicrophone(true);
-
-
-
-    // audioBtn.onloadedmetadata = function (ev) {
-
-    //     // Play the audio in the 2nd audio
-    //     // element what is being recorded
-    //     audioBtn.play();
-    // };
-
-
-    // let recorder = new MediaRecorder(mediaObj);
-
-    // start.addEventListener('click', function (e) {
-    //     console.log("recording")
-    //     recorder.start();
-    //     setTimeout(() => {
-    //         recorder.stop();
-    //         console.log("stopped")
-    //     }, 5000);
-
-    // })
-
-    // recorder.ondataavailable = function (ev) {
-    //     dataArray.push(ev.data)
-    // }
-
-    // let dataArray = [];
-
-    // recorder.onstop = function (ev) {
-    //     let data = new Blob(dataArray, { 'type': 'audio/mp3;' });
-
-    //     dataArray = []
-
-    //     let audiosrc = window.URL.createObjectURL(data);
-
-    //     console.log(audiosrc)
-    //     document.getElementById("newAudio").src = audiosrc;
-    // }
 }
 
 let pageIndex = 1;
@@ -369,71 +330,6 @@ function showOptions() {
         moreAction.style.visibility = "visible"
     }
 }
-// var coverIndex = 1;
-// var pageIndex = 0;
-// var num = $('.page').length;
-// var zIndexSet = '<style>';
-
-// for (i = 1; i <= num; i++) {
-//     zIndexSet += '[data-dir="r"]#page-' + i + '{z-index: ' + (num - i + 1) + '}';
-// };
-// zIndexSet += '</style>';
-// $('.book').prepend(zIndexSet);
-// $(function () {
-//     $('.page-trigger').on('click', function () {
-//         var e = $(this).parent('.page')
-//         flip(e.attr('id'), e)
-//     });
-
-
-//     $('.cover').on('click', function () {
-//         var e = $(this)
-//         flip(e.attr('id'), e)
-//     });
-
-// });
-
-// function flip(type, $page) {
-//     var isEnabled = true
-
-//     if (isEnabled) {
-//         isEnabled = false;
-
-//         if (type.indexOf('cover') != -1) {
-//             coverIndex += 1;
-
-//             setTimeout(function () {
-//                 $('.book-bg').css('z-index', '2')
-//             }, 800);
-//         }
-
-
-
-//         if ($page.attr('data-dir') == "r") {
-//             $page.attr('data-dir', 'l').css('transform', 'rotateY(-180deg)');
-//             $page.next().attr('data-dir', 'l').css('transform', 'rotateY(0deg)');
-//             if (type == 'page') { pageIndex += 2 }
-//             if (type == 'cover') { coverIndex += 1 }
-//             console.log('pageIndex ' + pageIndex + ' coverIndex ' + coverIndex);
-//             setTimeout(function () {
-//                 isEnabled = true
-//             }, 800);
-//         } else if ($page.attr('data-dir') == "l") {
-//             // debugger
-//             $page.attr('data-dir', 'r').css('transform', 'rotateY(180deg)');
-//             $page.prev().attr('data-dir', 'r').css('transform', 'rotateY(0deg)');
-//             if (type == 'page') { pageIndex -= 2 }
-//             if (type == 'cover') { coverIndex -= 1 }
-//             console.log('pageIndex ' + pageIndex + ' coverIndex ' + coverIndex);
-//             setTimeout(function () {
-//                 isEnabled = true
-//             }, 800);
-
-//         };
-
-//     };
-
-// }
 
 $(".option").click(function () {
     $(".option").removeClass("active");
@@ -467,38 +363,3 @@ const dataProcess = (event, res, w) => {
     }
     show.style.visibility = "visible";
 }
-
-// function downloadPDF() {
-//     let json = localStorage.getItem("story");
-//     let story = JSON.parse(json);
-
-//     var containerDiv = document.createElement("div");
-//     containerDiv.id = "containerDiv";
-
-//     var doc = new jsPDF({
-//         orientation: "landscape",
-//     });
-
-//     let count = story.parts.length;
-//     for (let i = 0; i < count; i++) {
-//         // var img = new Image();
-//         // img.crossOrigin = "";
-//         // img.src = "images/reading.png";
-//         // img.onload = function () {
-//         //     doc.addImage(this, 10, 10);
-//         //     doc.save('yourstory.pdf')
-//         // };
-//         doc.text(story.parts[i], 10, 10 + (i * 6));
-//     }
-//     doc.save('yourstory.pdf');
-// }
-
-// var x = document.getElementById("myAudio");
-
-// function playAudio() {
-//     x.play();
-// }
-
-// function pauseAudio() {
-//     x.pause();
-//   }
