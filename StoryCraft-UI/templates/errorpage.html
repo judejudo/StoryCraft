@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/errorpage.css">
+    <title>400 Bad Request</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="error">
+            <h2>400</h2>
+            <p>Oh no! It seems that something went wrong when making the request</p>
+            <button id="prevPageBtn">Back to home page</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("prevPageBtn").addEventListener('click', function(){
+            window.open("landing.html", "_self");
+        });
+    </script>
+</body>
+
+</html>
