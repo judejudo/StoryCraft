@@ -11,7 +11,7 @@ import os
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
 
 app = Flask(__name__)
 
@@ -28,6 +28,7 @@ def generate_story():
     try:
         id = str(uuid.uuid4())
         data = functions.get_data_from_request(request)
+        print (data)
         story_array = functions.generate_new_story(data[0], data[1], data[2], data[3], data[4], data[5], data[6],
                                                    data[7], data[8])
         generated_narration = audio.get_audio(story_array[0], id)
