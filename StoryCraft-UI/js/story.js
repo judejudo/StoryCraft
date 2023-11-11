@@ -10,29 +10,34 @@ var flipbookEL = document.getElementById('flipbook');
 var moreAction = document.getElementById('moreOptions');
 let phrase = "";
 let pageIndex = 1;
-const BASE_URL = 'http://127.0.0.1:5000/';
+const BASE_URL = 'api.mystorycraft.studio';
+const SERVICE_KEY = 'C:\\Users\\Nathan\\Downloads\\rare-beacon-401223-6048a1c249af.json';
 let dataArray = [];
 let recorder;
 let audioIN = { audio: true }
 let start = document.getElementById("startRecording");
 
-var config = {
-    apiKey: "",
-    authDomain: "a2sv-hackathon.firebaseapp.com",
-    projectId: "a2sv-hackathon",
-    storageBucket: "a2sv-hackathon.appspot.com",
-    messagingSenderId: "335557285236",
-    appId: "1:335557285236:web:95de9a7b59613041ef8821",
-    measurementId: "G-TJ192BJEB9"
-};
-firebase.initializeApp(config);
+
+// window.onload = (event) => {
+//     document.getElementById("sourceAudio").src = "../" + story.audio;
+// };
+// var config = {
+//     apiKey: "AIzaSyDiPkM01PcS84zFdsbCrXkMbPWDbX8bHqM",
+//     authDomain: "a2sv-hackathon.firebaseapp.com",
+//     projectId: "a2sv-hackathon",
+//     storageBucket: "a2sv-hackathon.appspot.com",
+//     messagingSenderId: "335557285236",
+//     appId: "1:335557285236:web:95de9a7b59613041ef8821",
+//     measurementId: "G-TJ192BJEB9"
+// };
+// firebase.initializeApp(config);
 
 const bucketName = "sound_buckets";
-const clientID = "";
-const accessToken = "";
+const clientID = "1090577769307-lhl8kgfugamtlnocet53hhffr1rfb574.apps.googleusercontent.com";
+// const clientID = "110106606735353386970";
+const accessToken = "AIzaSyA_KW8Qh0brtMekF8n3lErNTnsgRQP1RN4";
+// const accessToken = null;
 var form = document.createElement("form");
-
-document.getElementById("sourceAudio").src = story.audio;
 
 $(".option").click(function () {
     $(".option").removeClass("active");
@@ -59,7 +64,7 @@ for (let i = 0; i < paragraphs.length; i++) {
 for (let i = 0; i < pageCount; i++) {
     flipbookEL.innerHTML += `<div class="page">
                                 <div class="image-container">
-                                    <img src="${pageImages[i]}" alt="Character Image" draggable="false">
+                                    <img src="${pageImages[i]}" onerror="this.src='https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'" alt="Character Image" draggable="false">
                                 </div>
                                 <div class="text-container" id="text-container">
                                     <p>${clickableParagraphs[i]}</p>
@@ -124,7 +129,6 @@ async function nextStep(value) {
     window.open("storybook.html", "_self");
 }
 
-
 function getPhrase() {
     const regex = /.*?(\.)(?=\s[A-Z])/;
     phrase = regex.exec(paragraphs[1])[0];
@@ -150,8 +154,6 @@ function setRecording() {
     document.getElementById("recording-container").style.visibility = "visible";
 }
 
-
-
 function openQuiz(boolean) {
     questionNum = 0;
     let container = document.getElementById("quizContainer");
@@ -175,7 +177,6 @@ function openSteps(boolean) {
     }
 }
 
-
 function recordAudio() {
 
     async function getUserMedia(constraints) {
@@ -196,6 +197,16 @@ function recordAudio() {
         }
     }
 
+    async function loadGapiClient() {
+        return new Promise((resolve, reject) => {
+            gapi.load('client', () => {
+                gapi.client.init({
+                    'discoveryDocs': ['https://storage.googleapis.com/$discovery/rest?version=v1'],
+                }).then(resolve).catch(reject);
+            });
+        });
+    }
+
     async function upload3(blobFile) {
         let filename = Math.floor(Date.now() / 1000) + '-recording.flac';
         let response = await fetch(
@@ -209,7 +220,10 @@ function recordAudio() {
                 body: blobFile,
             }
         );
+
+
         let result = await response.json();
+
         if (result.mediaLink) {
             sendAudioFile(filename);
             alert(
@@ -219,7 +233,6 @@ function recordAudio() {
             // window.open("errorpage.html", "_self");
             console.log("Not sent")
         }
-
     }
 
 
@@ -313,8 +326,6 @@ function recordAudio() {
     startusingBrowserMicrophone(true);
 }
 
-
-
 function plusPage(n) {
     showPage(pageIndex += n);
 }
@@ -368,8 +379,6 @@ function showOptions() {
     }
 }
 
-
-
 function getMeaning(e, word) {
     const texts = document.querySelectorAll('.text-meaning');
 
@@ -379,6 +388,54 @@ function getMeaning(e, word) {
     axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
 
         .then((result) => dataProcess(e, result.data, word));
+}
+
+function downloadPdf() {
+    let dataUrls = []
+    for (let index = 0; index < pageImages.length; index++) {
+        toDataURL(pageImages[index], function (dataURL) {
+            var docDefinition = {
+                content: [
+                    {
+                        text: paragraphs[0],
+                        alignment: 'center',
+                        margin: [0, 0, 0, 20],
+                    },
+                    {
+                        image: dataURL,
+                        width: 500,
+                        height: 500,
+                        alignment: 'center'
+                    },
+                ],
+                defaultStyle: {
+                }
+            };
+            pdfMake.createPdf(docDefinition).print();
+        });
+    }
+
+}
+
+function toDataURL(src, callback) {
+    var image = new Image();
+    image.crossOrigin = 'Anonymous';
+    image.onload = function () {
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        canvas.height = this.naturalHeight;
+        canvas.width = this.naturalWidth;
+        context.drawImage(this, 0, 0);
+        var dataURL = canvas.toDataURL('image/jpeg');
+        callback(dataURL);
+    };
+    image.src = src;
+}
+
+function testURL() {
+    toDataURL('../images/audio.png', function (dataURL) {
+        alert(dataURL);
+    });
 }
 
 const dataProcess = (event, res, w) => {
@@ -396,4 +453,5 @@ const dataProcess = (event, res, w) => {
 showPage(pageIndex);
 setQuestion();
 getPhrase();
+
 

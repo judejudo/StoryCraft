@@ -7,9 +7,11 @@
     <script src="../js/auth.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-storage.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka One&family=Open+Sans&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
@@ -22,24 +24,7 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <ul class="menu-logo">
-            <li><a class="logo" href="landing.html">StoryCraft</a></li>
-        </ul>
-        <ul class="menu-items">
-            <li><a href="selection.html">Build a story</a></li>
-            <li><a href="explore.html"><span
-                        class="material-symbols-outlined">search</span></a></li>
-            <li><a>
-                    <select name="languages" id="lang">
-                        <option value="english">English</option>
-                        <option value="kiswahili">Swahili</option>
-                        <option value="french">French</option>
-                    </select>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <script src="../js/navbar.js"></script>
     <div class="container">
         <div class="quiz-container" id="quizContainer">
             <img onclick="openQuiz(false)" class="close-btn" id="closeBtn" src="../images/close (2).png" alt="">
@@ -124,38 +109,26 @@
             </div>
         </div>
         <div class="top">
-            <div class="left">
-                <div class="action-options" id="moreOptions">
-                    <button><span class="material-symbols-outlined">download_for_offline</span> Download</button>
-                    <button><span class="material-symbols-outlined">share</span> Share</button>
-                </div>
-                <div class="more-options" onclick="showOptions()">
-                    <span class="material-symbols-outlined">
-                        more_vert
-                    </span>
-                </div>
-                <div class="flipbook" id="flipbook">
-                </div>
-                <div class="clicknext" onclick="plusPage(1)">
-
-                </div>
+            <div class="action-options" id="moreOptions">
+                <button onclick="downloadPdf()"><span class="material-symbols-outlined">download_for_offline</span>
+                    Download</button>
+                <button onclick="testURL()"><span class="material-symbols-outlined">share</span> Share</button>
             </div>
-            <div class="right">
-                <div class="book-show">
+            <div class="more-options" onclick="showOptions()">
+                <span class="material-symbols-outlined">
+                    more_vert
+                </span>
+            </div>
+            <div class="flipbook" id="flipbook">
+            </div>
+            <div class="clicknext" onclick="plusPage(1)">
 
-                </div>
-                <div class="book-show">
-
-                </div>
-                <div class="book-show">
-
-                </div>
             </div>
         </div>
         <div class="bottom">
             <div class="audio-btn">
                 <audio controls>
-                    <source src="" type="audio/mp3" id="sourceAudio">
+                    <source src="../077de091-0532-4064-bf2a-d36677079bac.mp3" type="audio/mp3" id="sourceAudio">
                     Your browser does not support the audio element.
                 </audio>
             </div>

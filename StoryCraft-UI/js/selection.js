@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:5000/';
+const BASE_URL = 'api.mystorycraft.studio';
 
 let slideIndex = 1;
 let language = "English";

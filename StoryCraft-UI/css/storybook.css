@@ -2,83 +2,36 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans TC', sans-serif;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     overflow-x: hidden;
 }
 
 *,
 *::before,
-*:after {
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    width: 85%;
-    margin: auto;
-    background: #fff;
-    margin-top: 30px;
-}
-
-.navbar ul li {
-    display: inline;
-    margin: 20px;
-    font-family: "Roboto";
-    font-size: 18px;
-}
-
-.navbar a {
-    color: #422c33;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease-in-out;
-}
-
-.navbar a:hover {
-    color: #ffe07d;
-}
-
-.navbar ul li .logo {
-    color: #fec200;
-    font-family: "Fredoka One";
-    font-size: 50px;
-}
-
-#lang {
-    outline: 0;
-    padding: 5px;
-    border: 0;
-
-    &:hover {
-        cursor: pointer;
-        color: #fec200;
-    }
-}
-
 .container {
     margin-top: 30px;
-    height: 100vh;
 }
 
 .container .top {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-around;
     border-bottom: 2px solid #ffe07d;
-}
-
-.top .left {
     position: relative;
-    width: 90%;
-    height: 600px;
+    width: 100%;
+    height: auto;
 }
 
-.container .top .right {
+
+
+/* .container .top .right {
     background-color: #ffe07d;
     position: relative;
     width: 10%;
@@ -93,31 +46,32 @@ body {
         background-color: #422c33;
     }
 
-}
+} */
 
 
 .flipbook {
     transition: margin-left 0.25s ease-out;
     height: 100%;
     user-select: none;
-    width: 90%;
+    width: 100%;
     margin: auto;
 }
 
 .flipbook .page {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     position: relative;
-    padding: 50px;
+    padding: 20px;
 
     & img {
-        width: 650px;
+        width: 550px;
+        height: auto;
     }
 
     &>div {
-        margin: 30px;
+        margin: 20px;
     }
 
     & .text-container {
@@ -212,13 +166,13 @@ body {
 .flipbook .page .text-container {
     text-align: center;
     font-size: 25px;
-
+    font-weight: 300;
 }
 
 .bottom {
     display: flex;
     flex-direction: row;
-    margin: 50px;
+    margin: 40px;
 }
 
 .quiz-container {
@@ -353,7 +307,8 @@ body {
         font-size: 25px;
         font-family: 'Poppins';
         border: 0;
-        margin: 20px;
+        margin: 0 20px;
+        transition: all 0.3s ease-in-out;
 
         &:hover {
             cursor: pointer;
@@ -364,12 +319,22 @@ body {
         background-color: white;
         border: 3px solid rgb(10, 219, 10);
         color: rgb(10, 219, 10);
+
+        &:hover {
+            color: white;
+            box-shadow: inset 0 3.25em 0 0 rgb(10, 219, 10);
+        }
     }
 
     & .next-btn {
         background-color: black;
         color: white;
         border: 3px solid black;
+
+        &:hover {
+            color: black;
+            box-shadow: inset 0 3.25em 0 0 white;
+        }
     }
 }
 
@@ -444,6 +409,7 @@ audio {
     visibility: hidden;
 
     & button {
+        z-index: 3;
         background-color: #ffe9a3;
         border: 0;
         color: white;
@@ -453,9 +419,112 @@ audio {
         text-align: left;
         border-bottom: 1px solid white;
 
-        &::hover {
+        &:hover {
             background-color: #ffe07d;
             cursor: pointer;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .container .top {
+        justify-content: center;
+    }
+
+    .flipbook .page {
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        text-align: center;
+
+        & img {
+            width: 90%;
+            height: 80%;
+        }
+
+        &>div {
+            margin: 10px;
+        }
+
+        & .text-container {
+            width: 90%;
+            font-family: 'Poppins';
+            font-size: 17px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+    }
+
+    .bottom {
+        flex-direction: column;
+    }
+
+    .clicknext {
+        height: 40px;
+        width: 40px;
+
+        &:hover {
+            cursor: pointer;
+            transform: none;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    .bottom .next-btn {
+        text-align: center;
+
+        & button {
+            margin: 10px 0;
+        }
+    }
+
+    audio {
+        width: 300px;
+    }
+
+    .quiz-container {
+        & .close-btn {
+            width: 15px;
+            position: absolute;
+        }
+
+        & .questions {
+            width: 90%;
+            padding: 10px;
+            height: auto;
+
+            & .phrase-container {
+                font-size: 17px;
+                width: 90%;
+            }
+        }
+
+        & .img-correct-answer {
+            width: 40px;
+            top: 5px;
+        }
+
+        & .answer-text {
+            font-size: 16px;
+            font-weight: 300;
+            font-family: 'Poppin';
+        }
+
+        & .q-text {
+            font-size: 20px;
+            font-weight: 400;
+            margin-top: 15px;
+        }
+
+        & .choices {
+            margin-top: 15px;
+
+            & button {
+                border-radius: 10px;
+                width: 90%;
+            }
         }
     }
 }
