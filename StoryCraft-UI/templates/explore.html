@@ -15,28 +15,9 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <ul class="menu-logo">
-            <li><a class="logo" href="landing.html">StoryCraft</a></li>
-        </ul>
-        <ul class="menu-items">
-            <li><a href="selection.html">Build a story</a></li>
-            <li><a href="explore.html"><span
-                        class="material-symbols-outlined">search</span></a></li>
-
-            <li><a>
-                    <select name="languages" id="lang">
-                        <option value="english">English</option>
-                        <option value="kiswahili">Swahili</option>
-                        <option value="french">French</option>
-                    </select>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <h2 style="text-align: center;">Explore Stories By Others</h2>
-    <div class="container" id="stories-container">
-        <!-- Stories will be displayed here -->
+    <script src="../js/navbar.js"></script>
+    <div class="explore-container">
+        <ul id="stories-container"></ul>
     </div>
 
     <script type="module">
@@ -56,89 +37,127 @@
 
         const firebaseApp = initializeApp(firebaseConfig);
         const db = getFirestore(firebaseApp);
-
+        const parentHTML = document.getElementById("stories-container");
         const stories = [];
         const stories_id = [];
+
+
         // Function to fetch and display stories as JSON
-        function fetchAndDisplayStories() {
+        async function fetchAndDisplayStories() {
             var storiesRef = collection(db, "stories");
 
-            getDocs(storiesRef)
-                .then((querySnapshot) => {
-
-                    querySnapshot.forEach((doc) => {
-                        displayStory(doc.data(), doc.id);
-                        stories.push(doc.data());
-                        stories_id.push(doc.id);
-                    });
-                    console.log(JSON.stringify(stories, null, 2)); // Display stories as JSON in the console
-                })
-                .catch((error) => {
-                    console.error("Error fetching stories:", error);
-                });
+            var snapshot = await getDocs(storiesRef)
+            snapshot.forEach(val => {
+                // console.log(val)
+                stories.push(val.data())
+                stories_id.push(val.id)
+            })
         }
 
         // Call the function to fetch and display stories
-        fetchAndDisplayStories();
+        await fetchAndDisplayStories();
+        console.log(stories)
+        for (let index = 0; index < stories.length; index++) {
 
-        function displayStory(story, doc_id) {
-            const container = document.getElementById("stories-container");
-            const storyDiv = document.createElement("div");
-            storyDiv.className = "story";
-            storyDiv.setAttribute("data-id", doc_id);
-            storyDiv.onclick = function () {
-                const id = this.getAttribute("data-id");
-                var storyRef = collection(db, "stories");
-                getDocs(storyRef)
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-
-                            if (doc.id == id) {
-                                console.log(JSON.stringify(doc.data()));
-                                localStorage.removeItem("story");
-                                localStorage.setItem("story", JSON.stringify(doc.data()));
-                                window.open("storybook.html", "_self");
-                            }
-                        });
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching stories:", error);
-                    });
-            }
-
-            const uidElement = document.createElement("p");
-            uidElement.className = "uid";
-            uidElement.textContent = "UID: " + story.uid;
-
-            const timestampElement = document.createElement("p");
-            timestampElement.className = "timestamp";
-            const timestamp = new Date(story.timestamp.seconds * 1000);
-            timestampElement.textContent = "Created on: " + timestamp.toLocaleString();
-
-            const nameElement = document.createElement("p");
-            nameElement.className = "timestamp";
-            nameElement.textContent = "Name: " + story.name;
-
-            const ageElement = document.createElement("p");
-            ageElement.className = "timestamp";
-            ageElement.textContent = "Age: " + story.age;
-
-            const coverElement = document.createElement("img");
-            coverElement.className = "timestamp";
-            coverElement.src = story.cover_art;
-            coverElement.style = "width: 100%; height: 200px; object-fit: cover;";
-
-            const storyContent = document.createElement("div");
-            storyContent.className = "story-content";
-            storyContent.textContent = story.story.substring(0, 100) + "..."; 
-
-            storyDiv.appendChild(coverElement);
-            storyDiv.appendChild(timestampElement);
-            storyDiv.appendChild(nameElement);
-            storyDiv.appendChild(ageElement);
-            storyDiv.appendChild(storyContent);
-            container.appendChild(storyDiv);
+            parentHTML.innerHTML += `
+            <li data-id='${stories_id[index]}'><img src="${stories[index].cover_art}" onerror="this.src='https://images.freeimages.com/images/large-previews/213/blank-book-cover-1150402.jpg'"></li>`
         }
+
+        var covers = document.querySelectorAll('li');
+        for (var j in covers) {
+            covers[j].addEventListener("click", readStory, false);
+        }
+
+        function readStory(event) {
+            var id = this.getAttribute("data-id");
+            var storyRef = collection(db, "stories");
+            getDocs(storyRef)
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+
+                        if (doc.id == id) {
+                            localStorage.removeItem("story");
+                            localStorage.setItem("story", JSON.stringify(doc.data()));
+                            window.open("storybook.html", "_self");
+                        }
+                    });
+                })
+                .catch((error) => {
+                });
+        }
+
+        // const id = this.getAttribute("data-id");
+        //     var storyRef = collection(db, "stories");
+        //     getDocs(storyRef)
+        //         .then((querySnapshot) => {
+        //             querySnapshot.forEach((doc) => {
+
+        //                 if (doc.id == id) {
+        //                     localStorage.removeItem("story");
+        //                     localStorage.setItem("story", JSON.stringify(doc.data()));
+        //                     window.open("storybook.html", "_self");
+        //                 }
+        //             });
+        //         })
+        //         .catch((error) => {
+        //         });
+
+        // function displayStory(story, doc_id) {
+        //     const container = document.getElementById("stories-container");
+        //     const storyDiv = document.createElement("div");
+        //     storyDiv.className = "story";
+        //     storyDiv.setAttribute("data-id", doc_id);
+        //     storyDiv.onclick = function () {
+        //         const id = this.getAttribute("data-id");
+        //         var storyRef = collection(db, "stories");
+        //         getDocs(storyRef)
+        //             .then((querySnapshot) => {
+        //                 querySnapshot.forEach((doc) => {
+
+        //                     if (doc.id == id) {
+        //                         localStorage.removeItem("story");
+        //                         localStorage.setItem("story", JSON.stringify(doc.data()));
+        //                         window.open("storybook.html", "_self");
+        //                     }
+        //                 });
+        //             })
+        //             .catch((error) => {
+        //             });
+        //     }
+
+        //     const uidElement = document.createElement("p");
+        //     uidElement.className = "uid";
+        //     uidElement.textContent = "UID: " + story.uid;
+
+        //     const timestampElement = document.createElement("p");
+        //     timestampElement.className = "timestamp";
+        //     const timestamp = new Date(story.timestamp.seconds * 1000);
+        //     timestampElement.textContent = "Created on: " + timestamp.toLocaleString();
+
+        //     const nameElement = document.createElement("p");
+        //     nameElement.className = "timestamp";
+        //     nameElement.textContent = "Name: " + story.name;
+
+        //     const ageElement = document.createElement("p");
+        //     ageElement.className = "timestamp";
+        //     ageElement.textContent = "Age: " + story.age;
+
+        //     const coverElement = document.createElement("img");
+        //     coverElement.className = "timestamp";
+        //     coverElement.src = story.cover_art;
+        //     coverElement.style = "width: 100%; height: 200px; object-fit: cover;";
+
+        //     const storyContent = document.createElement("div");
+        //     storyContent.className = "story-content";
+        //     storyContent.textContent = story.story.substring(0, 100) + "...";
+
+        //     storyDiv.appendChild(coverElement);
+        //     storyDiv.appendChild(timestampElement);
+        //     storyDiv.appendChild(nameElement);
+        //     storyDiv.appendChild(ageElement);
+        //     storyDiv.appendChild(storyContent);
+        //     container.appendChild(storyDiv);
+        // }
     </script>
 
 </body>

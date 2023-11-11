@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka One&family=Open+Sans&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/loginpage2.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="center-container">
+
+        <div class="auth-container">
+            <div class="auth-hero">
+                <img src="../images/reading.gif" alt="Reading Cat">
+                <div class="auth-hero-content">
+                    <h2>StoryCraft</h2>
+                    <p>Building Stories, shaping futures</p>
+                </div>
+            </div>
+            <div class="auth-form">
+                <h2>Create an account</h2>
+                <hr>
+                <form action="post" id="signUpForm">
+                    <div class="form-group">
+                        <input id="regEmail" type="email" required><span class="highlight"></span><span
+                            class="bottom-line"></span>
+                        <label for="regEmail">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <input id="regPassword" type="password" required><span class="highlight"></span><span
+                            class="bottom-line"></span>
+                        <label for="regPassword">Password</label>
+                    </div>
+                    <div class="form-group">
+                        <input id="cfmpwd" type="password" required><span class="highlight"></span><span
+                            class="bottom-line"></span>
+                        <label for="cfmpwd">Confirm password</label>
+                    </div>
+                    <button type="submit"><span>Register</span></button>
+                </form>
+
+                <p class="auth-redirect">Already have an account? <a href="./loginpage.html">Login</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+<script src="../js/login.js"></script><script src="../js/login.js"></script>
+
+</html>
