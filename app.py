@@ -6,12 +6,13 @@ from utils import speech_test
 from utils import keys
 from flask_cors import CORS
 from difflib import SequenceMatcher
+from scores import Score_data_handler
 import uuid
 import os
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
 
 app = Flask(__name__)
 
@@ -22,6 +23,30 @@ CORS(app)
 def test():
     return render_template('welcome.html')
 
+
+score_handler = Score_data_handler()
+
+@app.route('/add_score', methods=['POST'])
+def add_score():
+    data = request.get_json()
+
+    if 'child_id' not in data:
+        return jsonify({'error': 'Child ID is required'}), 400
+
+    child_id = data['child_id']
+    score_handler.add_score_to_db(child_id)
+
+    return jsonify({'message': 'Score updated successfully'}), 200
+
+
+@app.route('/get_score/<child_id>', methods=['GET'])
+def get_score(child_id):
+    score = score_handler.current_score(child_id)
+
+    if score is not None:
+        return jsonify({'child_id': child_id, 'score': score}), 200
+    else:
+        return jsonify({'error': 'Score not found'}), 404
 
 @app.route('/generate_story', methods=['POST'])  # To generate the story
 def generate_story():
