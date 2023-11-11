@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e085711b-38e3-4202-9031-e72b0326d66a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoryCraft-UI/js/selection.js" beforeDir="false" afterPath="$PROJECT_DIR$/StoryCraft-UI/js/selection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoryCraft-UI/js/story.js" beforeDir="false" afterPath="$PROJECT_DIR$/StoryCraft-UI/js/story.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
