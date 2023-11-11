@@ -1,13 +1,14 @@
 import openai
 
 
+openai.api_key = ""
+
 def generate_with_prompt(prompt: str, temperature: float) -> str:
     """
     Generate text given input prompt.
     
     Args:
         prompt: Input prompt
-        temperature: Temperature of generation
 
     Returns:
         output
@@ -17,7 +18,7 @@ def generate_with_prompt(prompt: str, temperature: float) -> str:
     """
     # Generate story
     response = openai.Completion.create(
-        model="text-davinci-002",
+        model="gpt-3.5-turbo",
         prompt=prompt,
         temperature=temperature,
         max_tokens=500,

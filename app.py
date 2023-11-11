@@ -3,7 +3,7 @@ from utils import functions
 from utils import audio
 from utils import firestore
 from utils import speech_test
-import keys
+from utils import keys
 from flask_cors import CORS
 from difflib import SequenceMatcher
 import uuid
@@ -11,12 +11,12 @@ import os
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keys.GOOGLE_APPLICATION_CREDENTIALS
 
 app = Flask(__name__)
 
 
-# CORS(app)
+CORS(app)
 
 @app.route('/', methods=['GET'])  # To check if the server is running
 def test():
@@ -28,6 +28,7 @@ def generate_story():
     try:
         id = str(uuid.uuid4())
         data = functions.get_data_from_request(request)
+        print (data)
         story_array = functions.generate_new_story(data[0], data[1], data[2], data[3], data[4], data[5], data[6],
                                                    data[7], data[8])
         generated_narration = audio.get_audio(story_array[0], id)
@@ -49,7 +50,7 @@ def generate_story():
             'age': data[2],
         }
 
-        # firestore.store_story(response)
+        firestore.store_story(response)
         return jsonify(response)
 
     except Exception as e:

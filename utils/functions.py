@@ -6,19 +6,20 @@ import json
 
 def get_data_from_request(request):
     """Get data from the request and return it as a dictionary"""
+
     data = request.get_json()
     uid = data.get('uid', "")
     name = data.get('name', "")
     age = data.get('age', "")
     choices = data.get('choices', {})
-
-    language = choices[0].get('language', "")
-    favorite_animal = choices[0].get('favorite_animal', "")
-    exciting_place = choices[0].get('exciting_place', "")
-    special_interest = choices[0].get('special_interest', "")
-    superhero = choices[0].get('superhero', "")
-    mood = choices[0].get('mood', "")
-    return uid, name, age, language, favorite_animal, exciting_place, special_interest, superhero, mood
+    language = choices['language']
+    favorite_animal = choices['favorite_animal']
+    exciting_place = choices['exciting_place']
+    special_interest = choices['special_interest']
+    superhero = choices['superhero']
+    mood = choices['mood']
+    print("Here")
+    return [uid, name, age, language, favorite_animal, exciting_place, special_interest, superhero, mood]
 
 
 def generate_new_story(uid, name, age, language, favorite_animal, exciting_place, special_interest, superhero, mood):

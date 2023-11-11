@@ -99,8 +99,8 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 document.getElementById("googleSignIn").addEventListener("click", function () {
     var provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider)
-        .then(function (result) {
-            localStorage.setItem("uid", user.user.uid);
+        .then(function (user) {
+            localStorage.setItem("uid", user.uid);
             sessionStorage.setItem("AuthenticationState", "Authenticated");
             sessionStorage.setItem("AuthenticationExpires", new Date().addHours(2));
             window.open("landing.html", "_self");
