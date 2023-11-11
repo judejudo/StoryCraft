@@ -27,7 +27,7 @@ def get_audio(story, audio_name):
     }
 
     audio_response = requests.post(speech_url, json=audio_data, headers=headers)
-    audio = r"C:/Users/Nathan/PycharmProjects/StoryCraft/story_narrations/" + audio_name + ".mp3"
+    audio = "./story_narrations/" + audio_name + ".mp3"
     print(audio)
     with open(audio, 'wb') as f:
         for chunk in audio_response.iter_content(chunk_size=CHUNK_SIZE):
