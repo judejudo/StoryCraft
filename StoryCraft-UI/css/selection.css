@@ -77,13 +77,11 @@
     text-align: center;
     margin: auto;
     border-radius: 30px;
-    margin-top: 7px;
 }
 
 .choice-section {
     width: 80%;
     margin: auto;
-    margin-top: 20px;
     border-radius: 20px;
     box-shadow: 0 10px 20px 10px rgba(126, 126, 126, 0.19), 0 6px 6px rgba(126, 126, 126, 0.23);
 }
