@@ -24,7 +24,7 @@ def generate_image(prompt: str) -> str:
 
     try:
         iterator = replicate.run(
-            "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
+           "stability-ai/sdxl:c221b2b8ef527988fb59bf24a8b97c4561f1c671f73bd389f866bfb27c061316",
             input={
                 "prompt": prompt,
                 "width": 768,
@@ -37,7 +37,6 @@ def generate_image(prompt: str) -> str:
                 "seed": random.randint(0, 100),
             }
         )
-
         for image_url in iterator:
             if image_url is not None:
                 return image_url
