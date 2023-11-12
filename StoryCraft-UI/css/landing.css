@@ -140,3 +140,50 @@ lightorange: #ffe07d */
         font-size: 26px;
     }
 }
+.row{
+    display: flex;
+}
+.default-gap{
+    gap: 20px;
+}
+button{
+    font-weight: 500;
+}
+.secondary-btn{
+    border: 2px solid #fec200;
+    background: none;
+}
+
+@media screen and (max-width:768px) {
+    .responsive-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .hero-image {
+        display: none;
+    }
+
+    .container .tagline {
+        width: 100%
+    }
+
+    .navbar ul li .logo {
+        font-size: 30px;
+    }
+    .navbar{
+        width: 100%;
+    }
+    .tagtext{
+        line-height: 1.6;
+    }
+    .action-buttons{
+        margin-top: 100px;
+    }
+    .action-buttons a,button {
+        min-width: 100px;
+        width: 100%;
+        min-height: 80px;
+    }
+}

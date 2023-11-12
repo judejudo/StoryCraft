@@ -5,10 +5,11 @@
     padding: 0;
     margin: 0;
     font-family: 'Roboto';
-    overflow-y: hidden;
 }
 
-
+body{
+    overflow-x: hidden;
+}
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -77,13 +78,11 @@
     text-align: center;
     margin: auto;
     border-radius: 30px;
-    margin-top: 7px;
 }
 
 .choice-section {
     width: 80%;
     margin: auto;
-    margin-top: 20px;
     border-radius: 20px;
     box-shadow: 0 10px 20px 10px rgba(126, 126, 126, 0.19), 0 6px 6px rgba(126, 126, 126, 0.23);
 }
@@ -127,6 +126,7 @@
 
         & div {
             border-radius: 10px;
+            overflow-x: hidden;
 
             &:hover {
                 cursor: pointer;
@@ -254,6 +254,10 @@
     text-align: center;
     margin-top: 40px;
 
+    & .btn-nav {
+        display: none;
+    }
+
     & button {
         border: 3px solid #fec200;
         color: white;
@@ -332,5 +336,141 @@
 
     100% {
         content: ". . . . .";
+    }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+
+    .btn-nav {
+        display: none;
+    }
+
+    .title-container .title {
+        font-size: 25px;
+        margin-top: 30px;
+        letter-spacing: 1px;
+    }
+
+    .title-container hr {
+        width: 70px;
+        border-radius: 30px;
+    }
+
+    .choice-section {
+        width: 90%;
+        margin: auto;
+        margin-top: 10px;
+    }
+
+    .question {
+        padding: 10px;
+        height: auto;
+
+        &>p {
+            font-size: 18px;
+        }
+
+        &>div {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            & div {
+                margin: 10px;
+                padding: 10px;
+            }
+
+            & img {
+                width: 60px;
+            }
+
+            & p {
+                font-size: 16px;
+            }
+
+            & div {
+                min-width: 100px;
+            }
+        }
+    }
+
+    .first-q div {
+        margin: 15px;
+        font-size: 18px;
+
+        & input {
+            width: 100%;
+            font-size: 17px;
+        }
+    }
+
+    .bottom-nav {
+        margin-top: 3px;
+    }
+
+    .line {
+        height: 5px;
+        width: 35px;
+        margin: 0 2px;
+    }
+
+    .btn-generate {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+
+        & .btn-nav {
+            display: block;
+            background-color: white;
+            color: #fec200;
+            border: 3px solid #fec200;
+            padding: 7px;
+            border-radius: 30px;
+            transition: all 0.4s ease-in-out;
+            border: 3px solid #fec200;
+
+            &:hover {
+                color: #422c33;
+            }
+        }
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .example {
+        background: green;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .example {
+        background: blue;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .example {
+        background: orange;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .example {
+        background: pink;
     }
 }

@@ -4,34 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="../js/auth.js"></script>
     <link rel="stylesheet" href="../css/selection.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka One&family=Open+Sans&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>Make Selection</title>
 </head>
 
 <body>
-    <nav class="navbar">
-        <ul class="menu-logo">
-            <li><a class="logo" href="landing.html">StoryCraft</a></li>
-        </ul>
-        <ul class="menu-items">
-            <li><a href="selection.html">Build a story</a></li>
-        <li><a href="explore.html"><span class="material-symbols-outlined">search</span></a></li>
-            <li><a>
-                    <select name="languages" id="lang">
-                        <option value="english">English</option>
-                        <option value="kiswahili">Swahili</option>
-                        <option value="french">French</option>
-                    </select>
-                </a>
-            </li>
-        </ul>
-    </nav>
     <div class="loader-container" id="loaderContainer">
         <div class="book">
             <img src="../images/reading.gif" alt="Reading">
@@ -225,8 +210,15 @@
         <span class="line" onclick="currentSlide(7)"></span>
     </div>
     <div class="btn-generate">
+        <button class="btn-nav prev" onclick="plusSlides(-1)">
+            <span class="material-symbols-outlined md-36">arrow_left_alt</span>
+        </button>
         <button onclick="generateStory()">Generate</button>
+        <button class="btn-nav next" onclick="plusSlides(1)">
+            <span class="material-symbols-outlined md-36">arrow_right_alt</span>
+        </button>
     </div>
+    <script src="../js/navbar.js"></script>
     <script src="../js/selection.js"></script>
 </body>
 
