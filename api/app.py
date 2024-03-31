@@ -9,6 +9,7 @@ from difflib import SequenceMatcher
 from scores import Score_data_handler
 import uuid
 import os
+from dotenv import load_dotenv
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 os.environ["REPLICATE_API_TOKEN"] = keys.REPLICATE_API_TOKEN
@@ -53,10 +54,9 @@ def generate_story():
     try:
         id = str(uuid.uuid4())
         data = functions.get_data_from_request(request)
-        print (data)
         story_array = functions.generate_new_story(data[0], data[1], data[2], data[3], data[4], data[5], data[6],
                                                    data[7], data[8])
-        generated_narration = audio.get_audio(story_array[0], id)
+        # generated_narration = audio.get_audio(story_array[0], id)
         story_quiz = functions.get_questions(story_array[0])
         cover_art_link = functions.get_cover_art(story_array[5], story_array[6])
 
@@ -67,7 +67,7 @@ def generate_story():
             'story': story_array[1],
             'parts': story_array[2],
             'images': story_array[3],
-            'audio': generated_narration,
+            # 'audio': generated_narration,
             'questions': story_quiz,
             'cover_art': cover_art_link,
             'timestamp': firestore.timestamp,
@@ -75,7 +75,7 @@ def generate_story():
             'age': data[2],
         }
 
-        firestore.store_story(response)
+        # firestore.store_story(response)
         return jsonify(response)
 
     except Exception as e:
